@@ -1,0 +1,23 @@
+{
+    "name": "sterling-store",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Via5K/Sterling-Store.git"
+    },
+    "author": "Neeraj Nautiyal",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Via5K/Sterling-Store/issues"
+    },
+    "homepage": "https://github.com/Via5K/Sterling-Store#readme",
+    "dependencies": {
+        "@truffle/hdwallet-provider": "^2.0.16",
+        "dotenv": "^16.0.3",
+        "solc": "^0.8.17"
+    }
+}
