@@ -58,6 +58,11 @@ contract Voting {
         );
         _;
     }
+    /*****
+    onlyOwner : modifier makes sure that Only owner can stop the voting.
+    parameters:
+    _id
+    *****/
     modifier onlyOwner(string _id) {
         require(
             votingRecord[_id].owner == msg.sender,
@@ -137,7 +142,7 @@ contract Voting {
         ) {
             return (winner, ans);
         }
-        //update in past winners.
+        //updates the past winners
         previousWinners[_id][winner] = ans;
         return (winner, ans);
     }
