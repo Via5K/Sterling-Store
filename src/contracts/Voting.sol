@@ -16,7 +16,7 @@ contract Voting {
         //hasVoted
         mapping(address => bool) hasVoted;
         //votedFro
-        mapping(string => uint256) votedFor;
+        mapping(address => string) votedFor;
         //array for all the participants or the choices available to vote...
         string[] choices;
     }
@@ -38,7 +38,7 @@ contract Voting {
     _voter: this is the address of the person who is voting
     parameters:
     *****/
-    modifier eligibleToVote(string _id, address _voter) {
+    modifier eligibleToVote(string memory _id, address _voter) {
         require(
             votingRecord[_id].hasVoted[_voter] == false,
             "You have already casted a vote!!"
@@ -51,7 +51,7 @@ contract Voting {
     parameters:
     _id
     *****/
-    modifier votingStatus(string _id) {
+    modifier votingStatus(string memory _id) {
         require(
             votingRecord[_id].votingStarted == false,
             "Cannot Add New choices, because the voting has already started!!!"
@@ -63,7 +63,7 @@ contract Voting {
     parameters:
     _id
     *****/
-    modifier onlyOwner(string _id) {
+    modifier onlyOwner(string memory _id) {
         require(
             votingRecord[_id].owner == msg.sender,
             "You need to be the owner to declare the results.."
@@ -78,8 +78,12 @@ contract Voting {
     _votingName: name of the current voting.
     *****/
 
-    function createNewVoting(string _id, string _votingName) public {
-        votingRecord[_id] = participants;
+    function createNewVoting(string memory _id, string memory _votingName)
+        public
+    {
+        // participants storage newParticipant = votingRecord[_id];
+        // votingRecord[_id] = newParticipant;
+        votingRecord[_id].votingName = _votingName;
         votingRecord[_id].votingStarted = false;
         votingRecord[_id].owner = msg.sender;
         votingRecord[_id].resultDeclared = false;
@@ -92,10 +96,18 @@ contract Voting {
     _id: id generated from the frontend, which is eventually storing all the voting for this voting instance.
     _contestant: is the choices that we are going to get.
     *****/
-    function addChoices(string _id, string _contestant) public votingStatus {
+    function addChoices(string memory _id, string memory _contestant)
+        public
+        votingStatus(_id)
+    {
         require(
             votingRecord[_id].owner == msg.sender,
             "You need the entity that started voting to add new participants"
+        );
+        //makes sure that the voting has not been ended.
+        require(
+            votingRecord[_id].resultDeclared == false,
+            "You cannot add a new choice as, Result is already declared..."
         );
         votingRecord[_id].choices.push(_contestant);
     }
@@ -108,10 +120,35 @@ contract Voting {
     *****/
 
     //can also use indexing (like 0,1,2,3) but just to be on safer side using the string itself. ||Can be applied
-    function newVote(string _id, string _votedFor) public eligibleToVote {
+    function newVote(string memory _id, string memory _votedFor)
+        public
+        eligibleToVote(_id, msg.sender)
+    {
+        //makes sure that the voting has not been ended.
+        require(
+            votingRecord[_id].resultDeclared == false,
+            "You cannot cast the vote, Result is already declared..."
+        );
         votingRecord[_id].hasVoted[msg.sender] = true;
         votingRecord[_id].votedFor[msg.sender] = _votedFor;
         votingRecord[_id].voteCount[_votedFor] += 1;
+    }
+
+    /***** 
+    startVoting: Starts the voting if it has not already been started
+    parameters:
+    _id: id generated from the frontend, which is eventually storing all the voting for this voting instance.
+    *****/
+    function startVoting(string memory _id) public {
+        require(
+            msg.sender == votingRecord[_id].owner,
+            "You cannot start the voting. You need the owner of this voting."
+        );
+        require(
+            votingRecord[_id].votingStarted == false,
+            "Voting has already started."
+        );
+        votingRecord[_id].votingStarted = true;
     }
 
     /***** 
@@ -120,17 +157,21 @@ contract Voting {
     _id: id generated from the frontend, which is eventually storing all the voting for this voting instance.
     returns: name of the winner, and the votes recieved..
     *****/
-    function checkResult(string _id)
+    function checkResult(string memory _id)
         public
-        onlyOwner
+        onlyOwner(_id)
         returns (string memory, uint256)
     {
         votingRecord[_id].resultDeclared = true; //updating the resultDecalred Counter
         uint256 ans = 0;
         string memory winner = "";
+
         for (uint256 i = 0; i < votingRecord[_id].choices.length; i++) {
-            if (ans < votingRecord[_id].voteCount[choices[i]]) {
-                ans = votingRecord[_id].voteCount[choices[i]];
+            // string memory temp = votingRecord[_id].voteCount[votingRecord[_id].choices[i]];
+            if (
+                ans < votingRecord[_id].voteCount[votingRecord[_id].choices[i]]
+            ) {
+                ans = votingRecord[_id].voteCount[votingRecord[_id].choices[i]];
                 winner = votingRecord[_id].choices[i];
             }
         }
