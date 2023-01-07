@@ -29,12 +29,19 @@ contract checkDigitalDuplicate {
         verifiedUserList[msg.sender] = true;
     }
 
-    //checks duplicate... by taking 2 address params
+    /***** 
+    duplicate: a modifier that checks if it is digital duplicate or not?
+    parameters:
+    _original: the address of the company i.e the address that is verified to be original.
+    _current : the address of the company that you currently have.
+    *****/
     modifier duplicate(address _original, address _current) {
         require(_original == _current, "Yes it is a Digital Duplicate");
         _;
     }
-    //modfier that restricts the user if the user is not verified
+    /***** 
+    VerifiedUser: a modifier that checks if the current caller is verfied or not?
+    *****/
     modifier VerifiedUser() {
         require(
             verifiedUserList[msg.sender] == true,
@@ -43,16 +50,24 @@ contract checkDigitalDuplicate {
         _;
     }
 
-    //adds a user in the verifiedUserList, if the user is verfiedUser
+    /***** 
+    addVerifiedUser: a function, that adds a new user in the verifiedUserList.
+    parameters:
+    _user: the address of the user that you want to make verified...
+    *****/
     //only a verified user can add a new verified user...
     function addVerifiedUser(address _user) public VerifiedUser {
         verifiedUserList[_user] = true;
     }
 
-    //addCompanyAddress
-    /** takes a new address and puts it in the originalAddress mapping. 
-    And makes sure that the person who is adding this address is verified user.
-     */
+    /***** 
+
+    addCompanyAddress: a function that adds the company address and name in the mapping comapnyAddresses.
+    parameters:
+    _newAddress: the address of the company
+    _companyName: the name of the company.
+    *****/
+    // And makes sure that the person who is adding this address is verified user.
     function addCompanyAddress(address _newAddress, string memory _companyName)
         public
         VerifiedUser
@@ -66,9 +81,12 @@ contract checkDigitalDuplicate {
         companyAddresses[_newAddress].toggle = true;
     }
 
-    //original means the original owner that we think
-    //current means the current seller address form whom we are trying to buy it.
-    //manual check is when the user sends the address along with the original and current one....
+    /***** 
+    manualCheck: a function that is called by a consumer manually, to check if the 2 addresses are Digital duplicate or not.
+    parameters:
+    _original: the address of the company i.e the address that is verified to be original.
+    _current : the address of the company that you currently have.
+    *****/
     function manualCheck(address _original, address _current)
         public
         pure
@@ -79,6 +97,12 @@ contract checkDigitalDuplicate {
         //if not true then it is false;
     }
 
+    /***** 
+    autoCheck: a function that uses its own database to check if the current address we have is verified or not?
+    parameters:
+    _current: the address of the company that you currently have.
+    _companyName: name of the company that we are trying to buy from.
+    *****/
     //make sure that company name is sent in all lower cases....
     //auto check is from our own database...
     function autoCheck(address _current, string memory _companyName)
