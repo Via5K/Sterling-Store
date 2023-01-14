@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.4.22 <0.9.0;
 
+// pragma solidity ^0.8.7;
+// pragma solidity ^0.7.0;
+
 contract Voting {
     struct participants {
         //this will be the name of the voting that is being conducted....
@@ -30,6 +33,28 @@ contract Voting {
 
     //all the previous winners i.e id => nameOfWinner => VotedRecieved
     mapping(string => mapping(string => uint256)) previousWinners;
+
+    //mapping wherein, we store all the active votings and when a result is declared, we remove that voting from mapping.
+    //id=>bool
+    mapping(string => bool) activeVotingMap;
+
+    //stores the active voting _id
+    string[] activeVoting;
+
+    //stores the id and its index... Index is based on the activeVoting Array.
+    //id=>index in array...
+    mapping(string => uint256) activeVotingIndex;
+
+    //takes index and returns its id.
+    //Returns the id of the active votings....
+    function activeVotings(uint256 _index) public view returns (string memory) {
+        return activeVoting[_index];
+    }
+
+    //return active voting array's length...
+    function activeVotingLength() public view returns (uint256) {
+        return activeVoting.length;
+    }
 
     /*****
     eligibleToVote : checks if the current user is eligible to vote in this voting or not?
@@ -139,6 +164,7 @@ contract Voting {
     parameters:
     _id: id generated from the frontend, which is eventually storing all the voting for this voting instance.
     *****/
+
     function startVoting(string memory _id) public {
         require(
             msg.sender == votingRecord[_id].owner,
@@ -149,6 +175,9 @@ contract Voting {
             "Voting has already started."
         );
         votingRecord[_id].votingStarted = true;
+        activeVoting.push(_id); //push at the last.
+        activeVotingMap[_id] = true; //marking true of id in active votings...
+        activeVotingIndex[_id] = activeVoting.length - 1; //store the id=>index
     }
 
     /***** 
@@ -183,6 +212,13 @@ contract Voting {
         ) {
             return (winner, ans);
         }
+        activeVotingMap[_id] = false; //firstly the voting is not active,
+        //now remove this id from the array...
+        uint256 _index = activeVotingIndex[_id]; //find the index
+        activeVotingIndex[activeVoting[activeVoting.length - 1]] = _index; //now change the index because we are not directly deleting but using swapping and then removing the voting from th elast..
+        activeVoting[_index] = activeVoting[activeVoting.length - 1]; //swap
+        activeVoting.pop(); //delete
+
         //updates the past winners
         previousWinners[_id][winner] = ans;
         return (winner, ans);
