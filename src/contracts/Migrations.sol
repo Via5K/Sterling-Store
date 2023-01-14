@@ -16,4 +16,8 @@ contract Migrations {
   function setCompleted(uint completed) public restricted {
     last_completed_migration = completed;
   }
+  function upgrade(address _newAddress) public restricted{
+    Migrations upgraded = Migrations(_newAddress);
+    upgraded.setCompleted(last_completed_migration);
+  }
 }

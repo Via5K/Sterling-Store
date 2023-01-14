@@ -16,6 +16,7 @@
     },
     "homepage": "https://github.com/Via5K/Sterling-Store#readme",
     "dependencies": {
+        "@openzeppelin/contracts": "^4.8.0",
         "@truffle/hdwallet-provider": "^2.0.16",
         "dotenv": "^16.0.3",
         "solc": "^0.8.17"

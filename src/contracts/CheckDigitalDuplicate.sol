@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
+// pragma solidity ^0.7.0;
+
 contract checkDigitalDuplicate {
     /*Structure that is used in mapping to make sure that if the address of the company is 
     resent then it is registered with the name also. This is to make sure that if a comapny 
