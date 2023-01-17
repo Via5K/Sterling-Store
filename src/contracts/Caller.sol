@@ -1,28 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
-import "./GenericNFT.sol";
-import "./PreLaunchNFT.sol";
-import "./NonTransferableNFT.sol";
-import "./SpecialNFT.sol";
+import "./NFT.sol";
 
 contract Caller {
-    //Creating the Contracts instances of Doctor and Patient.
-    GenericNFT generic_;
-    SpecialNFT special_;
-    NonTransferableNFT non_transferable_;
-    PreLaunchNFT prelaunch_;
+    //Creating the Contracts instances of NFT CONTRACT
+    NFT nft_;
 
-    constructor(
-        GenericNFT _genericContractAddress,
-        SpecialNFT _specialContractAddress,
-        NonTransferableNFT _nonTransferableContractAddress,
-        PreLaunchNFT _preLaunchContractAddress
-    ) {
-        //updating the contracts instances with the addresses of the constructor
-        generic_ = GenericNFT(_genericContractAddress);
-        special_ = SpecialNFT(_specialContractAddress);
-        non_transferable_ = NonTransferableNFT(_nonTransferableContractAddress);
-        prelaunch_ = PreLaunchNFT(_preLaunchContractAddress);
+    //updating the contracts instances with the addresses of the constructor
+    constructor(NFT _nft) {
+        nft_ = NFT(_nft);
     }
 
     // //NOW WE CAN CALL THE CONTRACTS, BASED UPON THE THE SEPCIFICATIONS DECIDED AT FINAL....
@@ -35,35 +21,77 @@ contract Caller {
     // //3 = generic everything less than 10K
     // //4 = Non transferable i.e music, video etc. //done
 
-    function createNFT(uint256 _cost, uint256 _pid) public {
-        //also need to pass the parameter in make function....
-
-        //non transferrable nft is successfully created.. and tested also
+    function createNFT(
+        uint256 _cost,
+        uint256 _pid,
+        string memory _UqURL,
+        string memory _name,
+        string memory _description,
+        string memory _url,
+        string memory _trxnHash,
+        address _seller,
+        uint256 _validTill
+    ) public {
         if (_pid == 4) {
-            non_transferable_.mint(
-                "aaf",
+            // if it is pid==4, then it is non-transferabble.
+            nft_._NonTransferableNFT(
+                _UqURL,
                 true,
-                "neeraj",
-                "this is  owner",
-                "https://github.com/Via5k",
-                "235wbgsjdkgkg12ew",
+                _name,
+                _description,
+                _url,
+                _trxnHash,
                 4,
-                "14012023",
-                0x5B38Da6a701c568545dCfcB03FcB875f56beddC4,
-                "28012023"
-            ); // if it is pid==4, then it is non-transferabble.
+                block.timestamp,
+                _seller,
+                _validTill,
+                true
+            );
+        } else if (_pid == 2) {
+            // if it is pid==2, then it is prelaunch item.
+            nft_._PreLaunch(
+                _UqURL,
+                true,
+                _name,
+                _description,
+                _url,
+                _trxnHash,
+                2,
+                block.timestamp,
+                _seller,
+                _validTill,
+                true
+            );
+        } else if ((_pid == 1 && _cost >= 5000) || _cost >= 10000) {
+            //if it is electrical, then only create special...//or if it is greater than 10K.
+            nft_._Special(
+                _UqURL,
+                true,
+                _name,
+                _description,
+                _url,
+                _trxnHash,
+                1,
+                block.timestamp,
+                _seller,
+                _validTill,
+                false
+            );
+        } else if (_cost < 10000) {
+            //if it is less than 10K
+            nft_._Generic(
+                _UqURL,
+                true,
+                _name,
+                _description,
+                _url,
+                _trxnHash,
+                3,
+                block.timestamp,
+                _seller,
+                _validTill,
+                true
+            );
         }
-        // else if (_pid == 2) {
-        //     prelaunch_.make(); // if it is pid==2, then it is prelaunch item.
-        // } else if ((_pid == 1 && _cost >= 5000) || _cost >= 10000) {
-        //     special_.make(); //if it is electrical, then only create special...
-        //     //or if it is greater than 10K.
-        // } else if (_cost < 10000) {
-        //     generic_.make(); //if it is less than 10K
-        // }
-    }
-
-    function add() public returns (uint256) {
-        return 1 + 2;
     }
 }

@@ -38,6 +38,10 @@ contract ERC721 is ERC165, IERC721 {
         _;
     }
 
+    function ownerTokens(address _owner) public view returns (uint256) {
+        return _ownedTokensCount[_owner];
+    }
+
     constructor() {
         _registerInterface(
             bytes4(

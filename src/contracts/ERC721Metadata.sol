@@ -11,7 +11,7 @@ contract ERC721Metadata is IERC721Metadata, ERC165 {
     string private _name;
     string private _symbol;
 
-    constructor(string memory __name, string memory __symbol) public {
+    constructor(string memory __name, string memory __symbol) {
         _registerInterface(
             bytes4(keccak256("name(bytes4)") ^ keccak256("symbol(bytes4)"))
         );
