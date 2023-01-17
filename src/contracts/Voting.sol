@@ -1,9 +1,12 @@
-// SPDX-License-Identifier: GPL-3.0
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
-// pragma solidity ^0.8.7;
-// pragma solidity ^0.7.0;
-
+//NEW INSTRUCTIONS TO DO
+//NFT MAI MAPPING BANAYI HAI DIFFERNT TYPES KI,
+// TO SABSE PHLE CHECK KRNA KI VOTE KR SKTA HAI YA NAHI BY USING MAPPING.
+// USKE BD USS NFT KO HARR MAPPING SE HATA DO YA FIR FALSE KRDO...AUR NAI TO CONTRACT ADDRESS PE TRANSFER KRNA HAI DIRECT...
+// TRANSFER FROM FUNCTION BHI BANANA HAI, JISME SE KI, JB TRANSFER HOTO SARI MAPPING UPDATE HO JAYE.
+// AND LAST BUT NOT THE LEAST, JAISE HE VOTE HO TB NFT TRANSFER HONI CHAHIUE.
 contract Voting {
     struct participants {
         //this will be the name of the voting that is being conducted....
