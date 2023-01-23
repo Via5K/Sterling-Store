@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
-import "./ERC721Connector.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract NFT is ERC721Connector {
+contract NFT is ERC721 {
     // string public baseUri;
     // string public baseExtesion = ".json";
     // function setBaseUri(string memory _baseUri) external onlyOwner {
@@ -12,7 +12,8 @@ contract NFT is ERC721Connector {
     /***** 
     nftProp: Structure contains multiple dataTypes that stores different information.
     *****/
-
+    event mintEvent(address to, uint256 _tokenId);
+    event Stake(address from, address to, uint256 _tokenId);
     struct nftProp {
         bool minted; //makes sure if it is minted or not?
         string name; //name of the item.
@@ -43,7 +44,7 @@ contract NFT is ERC721Connector {
     address: Address of the Person 
     uint[]: stores all the tokenId.
     *****/
-    mapping(address => uint256[]) AllNonTransferrableNFT;
+    mapping(address => uint256[]) public AllNonTransferrableNFT;
 
     /***** 
     AllPreLaunchNFT mapping  stores all the non Prelaunch NFT's.
@@ -51,21 +52,28 @@ contract NFT is ERC721Connector {
     address: Address of the Person 
     uint[]: stores all the tokenId.
     *****/
-    mapping(address => uint256[]) AllPreLaunchNFT;
+    mapping(address => uint256[]) public AllPreLaunchNFT;
     /***** 
     AllSpecialNFT mapping  stores all the non transferable NFT's.
     Parameters:
     address: Address of the Person 
     uint[]: stores all the tokenId.
     *****/
-    mapping(address => uint256[]) AllSpecialNFT;
+    mapping(address => uint256[]) public AllSpecialNFT;
     /***** 
     AllGenericNFT mapping  stores all the non transferable NFT's.
     Parameters:
     address: Address of the Person 
     uint[]: stores all the tokenId.
     *****/
-    mapping(address => uint256[]) AllGenericNFT;
+    mapping(address => uint256[]) public AllGenericNFT;
+    /***** 
+    AllStakedNFT mapping  stores all the NFT's staked in contract..
+    Parameters:
+    address: Address of the Person 
+    uint[]: stores all the tokenId.
+    *****/
+    mapping(address => uint256[]) public AllStakedNFT;
 
     /***** 
     _NFTExists mapping  stores wether the NFT is created or not?
@@ -114,7 +122,7 @@ contract NFT is ERC721Connector {
     /***** 
     Constructor Set the Name and Symbol.
     *****/
-    constructor() ERC721Connector("SterlingStore", "SterlingNFT") {
+    constructor() ERC721("SterlingStore", "SterlingNFT") {
         owner = msg.sender;
     }
 
@@ -151,21 +159,41 @@ contract NFT is ERC721Connector {
     uint: nftType
     address: seller
     *****/
-    function viewNFTPropByIndex(uint256 _tokenId)
+    function viewNFTPropByIndex1(uint256 _tokenId)
         public
         view
         returns (
             string memory,
             string memory,
-            uint256,
-            address
+            string memory,
+            string memory,
+            uint256
         )
     {
         return (
             NFTinfo[_tokenId].name,
             NFTinfo[_tokenId].description,
-            NFTinfo[_tokenId].nftType,
-            NFTinfo[_tokenId].seller
+            NFTinfo[_tokenId].url,
+            NFTinfo[_tokenId].trxnHash,
+            NFTinfo[_tokenId].nftType
+        );
+    }
+
+    function viewNFTPropByIndex2(uint256 _tokenId)
+        public
+        view
+        returns (
+            uint256,
+            address,
+            uint256,
+            bool
+        )
+    {
+        return (
+            NFTinfo[_tokenId].boughtOn,
+            NFTinfo[_tokenId].seller,
+            NFTinfo[_tokenId].ExpireOn,
+            NFTinfo[_tokenId].expireable
         );
     }
 
@@ -207,22 +235,13 @@ contract NFT is ERC721Connector {
         NFTinfo[_tokenId].seller = _seller;
         NFTinfo[_tokenId].ExpireOn = _ExpireOn;
         NFTinfo[_tokenId].expireable = _expireable;
-        if (_nftType == 1) {
-            AllSpecialNFT[msg.sender].push(_tokenId);
-        } else if (_nftType == 2) {
-            AllPreLaunchNFT[msg.sender].push(_tokenId);
-        } else if (_nftType == 23) {
-            AllGenericNFT[msg.sender].push(_tokenId);
-        } else {
-            AllNonTransferrableNFT[msg.sender].push(_tokenId);
-        }
     }
 
     /***** 
     boughtOn & tempExp: Temporary variables for check.
     *****/
     // to transform a JavaScript date to unix timestamp (the number of seconds since 1970)
-    uint256 public boughtOn;
+    uint256 public boughtOnDate;
     uint256 public tempExp;
 
     /***** 
@@ -231,7 +250,7 @@ contract NFT is ERC721Connector {
     addTempExp - adds a expiry date by taking a input i.e expiry date.
     *****/
     function addNewBoughtOn() public {
-        boughtOn = block.timestamp;
+        boughtOnDate = block.timestamp;
     }
 
     function addTempExp(uint256 _exp) public {
@@ -262,9 +281,18 @@ contract NFT is ERC721Connector {
     }
 
     /***** 
+    AllSpecialNFTLength is used to find the length of the mapping.
     nftsLen function, is used to find the current length of th earray which contains all the NFT's. Returns length
     nftVal function is used to find the Unique string form which the NFT has been generated. Takes id as input and returns the unique URL.
     *****/
+    function AllSpecialNFTLength(address _off) public view returns (uint256) {
+        return AllSpecialNFT[_off].length;
+    }
+
+    function addSpecialNFT(address _off, uint256 _tokenId) internal {
+        AllSpecialNFT[_off].push(_tokenId);
+    }
+
     function nftsLen() public view returns (uint256) {
         return NFTs.length;
     }
@@ -300,10 +328,10 @@ contract NFT is ERC721Connector {
         uint256 _boughtOn,
         address _seller,
         uint256 _ExpireOn,
-        bool _expireable
+        address _off
     ) external {
         uint256 _tokenId = nftsLen();
-        mint(_nft);
+        mintToOthers(_off, _nft);
 
         addNftProp(
             _tokenId,
@@ -316,8 +344,10 @@ contract NFT is ERC721Connector {
             _boughtOn,
             _seller,
             _ExpireOn,
-            _expireable
+            true
         );
+
+        AllNonTransferrableNFT[_off].push(_tokenId);
     }
 
     /***** 
@@ -346,10 +376,10 @@ contract NFT is ERC721Connector {
         uint256 _boughtOn,
         address _seller,
         uint256 _ExpireOn,
-        bool _expireable
+        address _off
     ) external {
         uint256 _tokenId = nftsLen();
-        mint(_nft);
+        mintToOthers(_off, _nft);
         addNftProp(
             _tokenId,
             _minted,
@@ -361,8 +391,9 @@ contract NFT is ERC721Connector {
             _boughtOn,
             _seller,
             _ExpireOn,
-            _expireable
+            true
         );
+        AllPreLaunchNFT[_off].push(_tokenId);
     }
 
     /***** 
@@ -392,10 +423,10 @@ contract NFT is ERC721Connector {
         uint256 _boughtOn,
         address _seller,
         uint256 _ExpireOn,
-        bool _expireable
+        address _off
     ) external {
         uint256 _tokenId = nftsLen();
-        mint(_nft);
+        mintToOthers(_off, _nft);
         addNftProp(
             _tokenId,
             _minted,
@@ -407,8 +438,10 @@ contract NFT is ERC721Connector {
             _boughtOn,
             _seller,
             _ExpireOn,
-            _expireable
+            true
         );
+
+        AllGenericNFT[_off].push(_tokenId);
     }
 
     /***** 
@@ -437,10 +470,10 @@ contract NFT is ERC721Connector {
         uint256 _boughtOn,
         address _seller,
         uint256 _ExpireOn,
-        bool _expireable
+        address _off
     ) external {
         uint256 _tokenId = nftsLen();
-        mint(_nft);
+        mintToOthers(_off, _nft);
         addNftProp(
             _tokenId,
             _minted,
@@ -452,8 +485,10 @@ contract NFT is ERC721Connector {
             _boughtOn,
             _seller,
             _ExpireOn,
-            _expireable
+            false
         );
+        // addSpecialNFT(_off, _tokenId);
+        AllSpecialNFT[_off].push(_tokenId);
     }
 
     /***** 
@@ -499,6 +534,7 @@ contract NFT is ERC721Connector {
         NFTs.push(_nft); //add this Unique url to the NFTs Array.
         uint256 _id = NFTs.length - 1;
         _mint(msg.sender, _id);
+        emit mintEvent(msg.sender, _id);
         _ownerOwnedIds[msg.sender].push(_id);
         previousOwners[_id] += 1; //owners has been increased....or it has been sold once..
         //everytime we mint, then we are making sure that particular NFT is not minted again.
@@ -519,8 +555,72 @@ contract NFT is ERC721Connector {
         NFTs.push(_nft);
         uint256 _id = NFTs.length - 1;
         _mint(to, _id);
+        emit mintEvent(msg.sender, _id);
         //everytime we mint, then we are making sure that particular NFT is not minted again.
         _NFTExists[_nft] = true;
         previousOwners[_id] += 1;
+    }
+
+    /***** 
+    Stake Prop contains different information on when was this nft staked and what else to do with it. or when is it supposed to be sent back.
+    *****/
+    struct stakeProp {
+        uint256 _stakedOn;
+        uint256 _stakedTill;
+    }
+    mapping(address => mapping(uint256 => stakeProp)) StakedNFTs;
+
+    /***** 
+    StakeSpecialNFT function, is used to stake a Special NFT so that particular person can participate in the VOTING.
+    Parameters:
+    address: address of the person to whose address you want to mint the NFT.
+    Returns:
+    bool: True if the staking is successful otherwise false.
+    *****/
+
+    function StakeSpecialNFT(address _off, uint256 _till) public {
+        uint256 _tokenId = AllSpecialNFT[_off].length - 1;
+
+        // approve(_off, AllSpecialNFT[_off][_tokenId]); // this will send address and token id.
+        _transfer(_off, address(this), _tokenId);
+        AllSpecialNFT[_off].pop();
+        StakedNFTs[_off][_tokenId]._stakedOn = block.timestamp;
+        StakedNFTs[_off][_tokenId]._stakedTill = _till;
+        emit Stake(_off, owner, _tokenId);
+    }
+
+    /***** 
+    getAllStakedNFTFromAddress function, is used to return all the staked NFT's of the user.
+    It takes the address and returns integer array that contains the token ids that have been staked by the user.
+    Parameters:
+    address: address of the person to whose address you want to mint the NFT.
+    Returns:
+    uint[]: an array containing all the tokenIds staked of that user.
+    *****/
+    function getAllStakedNFTFromAddress(address _off)
+        public
+        view
+        returns (uint256[] memory)
+    {
+        return AllStakedNFT[_off];
+    }
+
+    /***** 
+    getStakedNFTProp function, is used to return the stakedOn and StakedTill.
+    Parameters:
+    address: address of the person to whose address you want to mint the NFT.
+    _tokenId: id of the token whose information needs to be fetched.
+    Returns:
+    uint, uint
+    *****/
+    function getStakedNFTProp(address _off, uint256 _tokenId)
+        public
+        view
+        returns (uint256, uint256)
+    {
+        return (
+            StakedNFTs[_off][_tokenId]._stakedOn,
+            StakedNFTs[_off][_tokenId]._stakedTill
+        );
     }
 }

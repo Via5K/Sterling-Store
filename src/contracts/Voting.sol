@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
+import "./NFT.sol";
 
 //NEW INSTRUCTIONS TO DO
 //NFT MAI MAPPING BANAYI HAI DIFFERNT TYPES KI,
@@ -8,6 +9,12 @@ pragma solidity >=0.4.22 <0.9.0;
 // TRANSFER FROM FUNCTION BHI BANANA HAI, JISME SE KI, JB TRANSFER HOTO SARI MAPPING UPDATE HO JAYE.
 // AND LAST BUT NOT THE LEAST, JAISE HE VOTE HO TB NFT TRANSFER HONI CHAHIUE.
 contract Voting {
+    NFT nft_;
+
+    constructor(NFT _nft) {
+        nft_ = _nft;
+    }
+
     struct participants {
         //this will be the name of the voting that is being conducted....
         string votingName;
@@ -57,6 +64,14 @@ contract Voting {
     //return active voting array's length...
     function activeVotingLength() public view returns (uint256) {
         return activeVoting.length;
+    }
+
+    function getVotingName(string memory _tokenId)
+        public
+        view
+        returns (string memory)
+    {
+        return votingRecord[_tokenId].votingName;
     }
 
     /*****
@@ -115,6 +130,9 @@ contract Voting {
         votingRecord[_id].votingStarted = false;
         votingRecord[_id].owner = msg.sender;
         votingRecord[_id].resultDeclared = false;
+        activeVoting.push(_id); //push at the last.
+        activeVotingMap[_id] = true; //marking true of id in active votings...
+        activeVotingIndex[_id] = activeVoting.length - 1; //store the id=>index
     }
 
     /***** 
@@ -141,6 +159,23 @@ contract Voting {
     }
 
     /***** 
+    viewChoices: is the function that returns all the choices available for the voting.
+    parameters:
+    
+    _id: id generated from the frontend, which is eventually storing all the voting for this voting instance.
+    Returns:
+    string[] memory: Returns all the choices available for that id.
+    *****/
+
+    function viewChoices(string memory _id)
+        public
+        view
+        returns (string[] memory)
+    {
+        return votingRecord[_id].choices;
+    }
+
+    /***** 
     newVote: Casts a new vote in the voting after checking if it is valid.
     parameters:
     _id: id generated from the frontend, which is eventually storing all the voting for this voting instance.
@@ -148,15 +183,29 @@ contract Voting {
     *****/
 
     //can also use indexing (like 0,1,2,3) but just to be on safer side using the string itself. ||Can be applied
+    //uint _till should either be fixed or dynamic for the time being i am commenting the code.
+    // , uint _till
     function newVote(string memory _id, string memory _votedFor)
         public
         eligibleToVote(_id, msg.sender)
     {
+        require(
+            votingRecord[_id].votingStarted == true,
+            "Voting has not started Yet..."
+        );
         //makes sure that the voting has not been ended.
         require(
             votingRecord[_id].resultDeclared == false,
             "You cannot cast the vote, Result is already declared..."
         );
+        //calling len function because we cannot directly acess mapping. So have created functions for it.
+        //make sure that person has NFT....
+        require(
+            nft_.AllSpecialNFTLength(msg.sender) > 0,
+            "Please own a Special NFT in order to Caste your Vote"
+        );
+        // nft_.StakeSpecialNFT(msg.sender, _till);
+        nft_.StakeSpecialNFT(msg.sender, block.timestamp + 100);
         votingRecord[_id].hasVoted[msg.sender] = true;
         votingRecord[_id].votedFor[msg.sender] = _votedFor;
         votingRecord[_id].voteCount[_votedFor] += 1;

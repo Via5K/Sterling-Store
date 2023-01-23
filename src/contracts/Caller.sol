@@ -45,7 +45,7 @@ contract Caller {
                 block.timestamp,
                 _seller,
                 _validTill,
-                true
+                msg.sender
             );
         } else if (_pid == 2) {
             // if it is pid==2, then it is prelaunch item.
@@ -60,7 +60,7 @@ contract Caller {
                 block.timestamp,
                 _seller,
                 _validTill,
-                true
+                msg.sender
             );
         } else if ((_pid == 1 && _cost >= 5000) || _cost >= 10000) {
             //if it is electrical, then only create special...//or if it is greater than 10K.
@@ -75,7 +75,7 @@ contract Caller {
                 block.timestamp,
                 _seller,
                 _validTill,
-                false
+                msg.sender
             );
         } else if (_cost < 10000) {
             //if it is less than 10K
@@ -90,7 +90,7 @@ contract Caller {
                 block.timestamp,
                 _seller,
                 _validTill,
-                true
+                msg.sender
             );
         }
     }
