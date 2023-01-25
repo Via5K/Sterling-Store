@@ -556,6 +556,7 @@ contract NFT is ERC721 {
         uint256 _id = NFTs.length - 1;
         _mint(to, _id);
         emit mintEvent(msg.sender, _id);
+        _ownerOwnedIds[msg.sender].push(_id);
         //everytime we mint, then we are making sure that particular NFT is not minted again.
         _NFTExists[_nft] = true;
         previousOwners[_id] += 1;
