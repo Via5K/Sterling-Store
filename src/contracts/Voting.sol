@@ -55,9 +55,14 @@ contract Voting {
     //id=>index in array...
     mapping(string => uint256) activeVotingIndex;
 
-    //takes index and returns its id.
+    //takes index and returns the id of the voting present at that index.
     //Returns the id of the active votings....
-    function activeVotings(uint256 _index) public view returns (string memory) {
+    //was named as activeVotings
+    function findActiveVotingsId(uint256 _index)
+        public
+        view
+        returns (string memory)
+    {
         return activeVoting[_index];
     }
 

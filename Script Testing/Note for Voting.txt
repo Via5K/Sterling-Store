@@ -1,0 +1,4 @@
+Once voting is created, make sure that you start it also.
+And once the voting is created, add a new hyperlink in the page to add the choices/options
+
+In find active VotinfsId, make sure to change the function name once the contracts are redeployed.
