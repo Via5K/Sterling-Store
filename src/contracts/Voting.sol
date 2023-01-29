@@ -57,7 +57,7 @@ contract Voting {
 
     //takes index and returns the id of the voting present at that index.
     //Returns the id of the active votings....
-    //was named as activeVotings
+    //was named as activeVotings make sure to change in js file also once this is dpeloyed again
     function findActiveVotingsId(uint256 _index)
         public
         view
