@@ -301,6 +301,107 @@ contract NFT is ERC721 {
         return NFTs[_id];
     }
 
+    function viewAllTokens(address _off)
+        public
+        view
+        returns (uint256[] memory)
+    {
+        uint256[] memory allUserTokensNontransfer = AllNonTransferrableNFT[
+            _off
+        ];
+        uint256[] memory allUserTokensPrelaunch = AllPreLaunchNFT[_off];
+        uint256[] memory allUserTokensGeneric = AllGenericNFT[_off];
+        uint256[] memory allUserTokensSpecial = AllSpecialNFT[_off];
+        uint256[] memory allTokens = new uint256[](
+            allUserTokensGeneric.length +
+                allUserTokensNontransfer.length +
+                allUserTokensPrelaunch.length +
+                allUserTokensSpecial.length
+        );
+        uint256 counter = 0;
+        for (uint256 i = 0; i < allUserTokensNontransfer.length; i++) {
+            // allTokens.push(allUserTokensNontransfer[i]);
+            allTokens[counter] = allUserTokensNontransfer[i];
+            counter += 1;
+        }
+        for (uint256 i = 0; i < allUserTokensPrelaunch.length; i++) {
+            // allTokens.push(allUserTokensPrelaunch[i]);
+            allTokens[counter] = allUserTokensPrelaunch[i];
+            counter += 1;
+        }
+        for (uint256 i = 0; i < allUserTokensGeneric.length; i++) {
+            // allTokens.push(allUserTokensGeneric[i]);
+            allTokens[counter] = allUserTokensGeneric[i];
+            counter += 1;
+        }
+        for (uint256 i = 0; i < allUserTokensSpecial.length; i++) {
+            // allTokens.push(allUserTokensSpecial[i]);
+            allTokens[counter] = allUserTokensSpecial[i];
+            counter += 1;
+        }
+        return allTokens;
+    }
+
+    //this function returns all the tokens with nft info.
+    function viewPersonalNFT(address _off)
+        public
+        view
+        returns (nftProp[] memory)
+    {
+        // uint[] memory allOwnedTokens = viewAllTokens();
+        uint256[] memory allOwnedTokens = viewAllTokens(_off);
+        nftProp[] memory NFTpropDetail = new nftProp[](allOwnedTokens.length);
+        for (uint256 i = 0; i < allOwnedTokens.length; i++) {
+            NFTpropDetail[i] = NFTinfo[i];
+            // NFTpropDetail.push(NFTinfo[i]);
+        }
+        return NFTpropDetail;
+    }
+
+    //same above function but contains another parameter allownedTokens.
+    function userPersonalNFTinfo(address _off, uint256[] memory allOwnedTokens)
+        public
+        view
+        returns (nftProp[] memory)
+    {
+        // uint[] memory allOwnedTokens = viewAllTokens(_off);
+        nftProp[] memory NFTpropDetail = new nftProp[](allOwnedTokens.length);
+        for (uint256 i = 0; i < allOwnedTokens.length; i++) {
+            NFTpropDetail[i] = NFTinfo[i];
+            // NFTpropDetail.push(NFTinfo[i]);
+        }
+        return NFTpropDetail;
+    }
+
+    function userStakedNFTinfo(address _user, uint256[] memory allOwnedTokens)
+        public
+        view
+        returns (stakeProp[] memory)
+    {
+        stakeProp[] memory stakePropDetail;
+        for (uint256 i = 0; i < allOwnedTokens.length; i++) {
+            (
+                stakePropDetail[i]._stakedOn,
+                stakePropDetail[i]._stakedTill
+            ) = getStakedNFTProp(_user, i);
+        }
+        return stakePropDetail;
+    }
+
+    function viewUserStakedNFT(address _user)
+        public
+        view
+        returns (nftProp[] memory, stakeProp[] memory)
+    {
+        uint256[] memory allStakedTokens = getAllStakedNFTFromAddress(_user);
+        // uint[] memory allOwnedTokens = viewAllTokens();
+        // uint[] memory allOwnedTokens = viewAllTokens(_user);
+        return (
+            userPersonalNFTinfo(_user, allStakedTokens),
+            userStakedNFTinfo(_user, allStakedTokens)
+        );
+    }
+
     /***** 
     _NonTransferableNFT function, is used to mint and then add the property of the NFT.
     Parameters:
@@ -350,7 +451,7 @@ contract NFT is ERC721 {
         AllNonTransferrableNFT[_off].push(_tokenId);
     }
 
-    /***** 
+    /***** 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4
     _PreLaunch function, is used to mint and then add the property of the NFT.
     Parameters:
     string: _nft - Unique URL
@@ -580,11 +681,15 @@ contract NFT is ERC721 {
     *****/
 
     function StakeSpecialNFT(address _off, uint256 _till) public {
-        uint256 _tokenId = AllSpecialNFT[_off].length - 1;
-
+        uint256 _tokenId;
+        if (AllSpecialNFT[_off].length == 0) {
+            _tokenId = AllSpecialNFT[_off][0];
+        } else _tokenId = AllSpecialNFT[_off][AllSpecialNFT[_off].length - 1];
         // approve(_off, AllSpecialNFT[_off][_tokenId]); // this will send address and token id.
         _transfer(_off, address(this), _tokenId);
         AllSpecialNFT[_off].pop();
+        //add this token to stake nft.
+        AllStakedNFT[_off].push(_tokenId);
         StakedNFTs[_off][_tokenId]._stakedOn = block.timestamp;
         StakedNFTs[_off][_tokenId]._stakedTill = _till;
         emit Stake(_off, owner, _tokenId);
