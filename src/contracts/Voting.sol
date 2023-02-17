@@ -135,9 +135,9 @@ contract Voting {
         votingRecord[_id].votingStarted = false;
         votingRecord[_id].owner = msg.sender;
         votingRecord[_id].resultDeclared = false;
-        activeVoting.push(_id); //push at the last.
-        activeVotingMap[_id] = true; //marking true of id in active votings...
-        activeVotingIndex[_id] = activeVoting.length - 1; //store the id=>index
+        // activeVoting.push(_id); //push at the last.
+        // activeVotingMap[_id] = true; //marking true of id in active votings...
+        // activeVotingIndex[_id] = activeVoting.length - 1; //store the id=>index
     }
 
     /***** 
