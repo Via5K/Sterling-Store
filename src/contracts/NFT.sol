@@ -149,6 +149,11 @@ contract NFT is ERC721 {
             _mint(msg.sender, tokenId);
     }
 
+    //return the type of nft by taking in the tokenID of the nft.
+    function getNFTtype(uint256 _tokenId) public view returns (uint256) {
+        return NFTinfo[_tokenId].nftType;
+    }
+
     /***** 
     viewNFTPropByIndex: Temporary function to check if the Properties of NFT is being successfully stored.
     Parameters:
@@ -378,7 +383,9 @@ contract NFT is ERC721 {
         view
         returns (stakeProp[] memory)
     {
-        stakeProp[] memory stakePropDetail;
+        stakeProp[] memory stakePropDetail = new stakeProp[](
+            allOwnedTokens.length
+        );
         for (uint256 i = 0; i < allOwnedTokens.length; i++) {
             (
                 stakePropDetail[i]._stakedOn,
@@ -599,6 +606,14 @@ contract NFT is ERC721 {
     uint []: Integer Array that contains all the IDS owned by te that address.
     *****/
     mapping(address => uint256[]) _ownerOwnedIds;
+
+    function getAllOwnerOwnedIds(address _user)
+        public
+        view
+        returns (uint256[] memory)
+    {
+        return _ownerOwnedIds[_user];
+    }
 
     /***** 
     removeAllExpiredNFT function, is used to remove the Expired NFT from the list. 
