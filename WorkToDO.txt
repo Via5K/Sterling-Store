@@ -1,0 +1,2 @@
+1. Add buy from money option in Marketplace. (Currently we are just buying but without any ether, so add this function)
+Add Burn function
