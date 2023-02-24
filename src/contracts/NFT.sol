@@ -747,17 +747,40 @@ contract NFT is ERC721 {
 
     /*** @Contract Marketplace: **/
 
+    /****
+    viewMyNFTs function lists all the NFTs owned by the user.
+    Parameters:
+    address: of the user whose NFT tokenID you want to find.
+    Returns:
+    uint[]: token ids
+
+    ****/
     //returns the tokenIDS of the user owned tokens.
     function viewMyNFTS(address _off) public view returns (uint256[] memory) {
         return viewAllTokens(_off);
         // uint[] memory myNFTtokenIds = viewAllTokens(_off);
     }
 
-    //return the total number of nft that this user have.
+    /****
+    availableToBuy function returns the total number of NFT's that this user have.
+    Parameters:
+    address: address of the user whose NFT count you want to know.
+    Returns:
+    uint: total number of tokens.
+    ****/
     function myTotalNFTCount(address _off) public view returns (uint256) {
         return viewMyNFTS(_off).length;
     }
 
+    /****
+    viewMyStakedNFTs function returns the information along with staked properties and NFT properties.
+    Parameters:
+    address: address of the current user who is interacting (or can pass someone else's also).
+    Returns:
+    nftProp[]: which contains the Properties of the NFT.
+    stakeProp[]: Contains the staked Properties of the NFT.
+
+    ****/
     //returns the information about the staked NFT.
     //return information includes, nftProp[] and stakedProp[].
     function viewMyStakedNFTs(address _user)
@@ -768,15 +791,20 @@ contract NFT is ERC721 {
         return viewUserStakedNFT(_user);
     }
 
-    //now for marketplace.....
-
-    //mapping for tokenId=>address :- uint for token id and address for the person who is selling.
+    /****
+    forSell mapping maps the tokens which are listed for sell.
+    uint: tokenId=>True/False
+    ****/
     mapping(uint256 => bool) forSell;
 
     //array contians the tokenId's for easy size description.
     uint256[] forSellArray;
-
-    //checks if the token Exists ..... and then checks if the user owns the token id.
+    /****
+    isNFTOwner Modifier checks wether the NFT exists or not?
+    and then checks if the current owner owns the token or not?
+    Parameters:
+    uint: tokenId
+    ****/
     modifier isNFTOwner(uint256 _tokenId) {
         if (_tokenId > 0) {
             require(
@@ -801,8 +829,14 @@ contract NFT is ERC721 {
         _;
     }
 
-    // function available to buy nfts... or the nfts that are available to sell by the user..returns the nft information along with the token ids for those nfts.
-    function availableToBuy(address _user)
+    /****
+    availableToBuy function lists all the NFTs that can be bought. Or list of NFTs that users want to sell
+    Returns:
+    nftProp[]: which contains the Properties of the NFT.
+    uint[]: Contains the token Ids of the NFTs.
+    ****/
+
+    function availableToBuy()
         public
         view
         returns (nftProp[] memory, uint256[] memory)
@@ -821,22 +855,42 @@ contract NFT is ERC721 {
         return (availableToBuyNFTsInformation, availableToBuyNFTsTokenIds);
     }
 
+    /****
+    Bought mapping is used to check that how many NFT's has been sold.
+    Parameters:
+    uint: _tokenId id of the token
+    bool: true or false
+    
+    tokenId=>true/false
+    ****/
     mapping(uint256 => bool) Bought;
 
-    // tokenId=>true/false
-    //add for sell, put them as we are selling.
+    /****
+    addForSell function adds a NFT into marketplace for selling. That is another person can buy that NFT.
+    Parameters:
+    uint: _tokenId id of the token
+    ****/
     function addForSell(uint256 _tokenId) public isNFTOwner(_tokenId) {
+        //if it is a non transferrable NFT then it cannot be sold.
         require(getNFTtype(_tokenId) != 4, "Cannot Sell Non Transferable NFT");
+        //check if the NFT is listed for selling already?
         require(forSell[_tokenId] == false, "Already Listed For Selling!!");
         forSell[_tokenId] = true;
         forSellArray.push(_tokenId);
     }
 
+    /****
+    removeFromSell function removes the NFT from Selling
+    Parameters:
+    uint: _tokenId id of the token
+    ****/
     function removeFromSell(uint256 _tokenId) public isNFTOwner(_tokenId) {
+        //first make sure that hte NFT is not bought...
         require(
             Bought[_tokenId] == false,
             "Cannot remove from Selling, NFT is already sold..."
         );
+        //now check if it is listed for the sell?
         require(forSell[_tokenId] == true, "NFT is not listed for selling...");
         forSell[_tokenId] = false;
         //now remove the nft from forSellArray too....
@@ -855,10 +909,17 @@ contract NFT is ERC721 {
         }
     }
 
-    //used to buy the NFT
+    /****
+    buyNFT function is used to buy the NFT. Only those NFTs can be bought which are actually listed for selling.
+    Parameters:
+    uint: _tokenId id of the token
+    ****/
     function buyNFT(uint256 _tokenId) public {
+        //check if the current user who is trying to buy is the same one as who listed the NFT for selling.
         require(msg.sender != ownerOf(_tokenId), "You cannot Buy Your Own NFT");
+        //check if NFT is already biught or not?
         require(Bought[_tokenId] == false, "NFT Already Bought!!");
+        //Check if NFT is available to sell or has it been removed.
         require(forSell[_tokenId] == true, "NFT removed from Selling");
         forSell[_tokenId] = false;
         Bought[_tokenId] = true;
@@ -916,7 +977,17 @@ contract NFT is ERC721 {
         }
     }
 
-    //after selling, we need to make sure that nft is added to wallet of user as well as removed from prevous owners wallet.
+    /****
+    removeNFTfromAddress function helps in transferring the NFT from one wallet to another and update the mapping in between the process.
+    It removes teh NFT From previous owners wallet.
+    Parameters:
+    uint: _tokenId id of the token
+    address: _tempUser address of the previous owner. (FOR CUSTOM CHECK ONLY..... NO USE)
+    uint[]: array of the tokens owned by the previous owner.
+    Returns:
+    uint[]: New modified sized array.
+
+    ****/
     function removeNFTfromAddress(
         uint256 _tokenId,
         address _tempUser,
@@ -942,8 +1013,17 @@ contract NFT is ERC721 {
         return tokensOwned;
     }
 
-    //because pop function in arrays is giving memory storage issue so created new function.
+    /****
+    shrinkArray function is a special fucntion which is created to change the size of teh array dynamically. 
+    It is built so that while working with the arrays and want to reduce size of a particular array, just send the array along with the new size of the array. It will shrink the array from teh last.
+    Parameters:
+    array and new size of the array
+    Returns:
+    New modified sized array.
 
+
+    Because pop function in arrays is giving memory storage issue so created new function.
+    ****/
     function shrinkArray(uint256[] memory array, uint256 newLength)
         internal
         pure
