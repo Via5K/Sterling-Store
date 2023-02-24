@@ -986,7 +986,6 @@ contract NFT is ERC721 {
     uint[]: array of the tokens owned by the previous owner.
     Returns:
     uint[]: New modified sized array.
-
     ****/
     function removeNFTfromAddress(
         uint256 _tokenId,
