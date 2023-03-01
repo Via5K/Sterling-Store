@@ -1038,4 +1038,14 @@ contract NFT is ERC721 {
         }
         return array;
     }
+
+    //BURN FUNCTION, NEED TO MODIFY THE STATUS,
+    //CHANGE ALL THE OTHER MAPPING AND MAKKE SURE IT DOES NOT CLASHES WITH EXPIREABLE.
+
+    // function burnMyToken(uint256 _tokenId, address _off) public returns (bool) {
+    //     if (ownerOf(_tokenId) == _off) {
+    //         _burn(_tokenId);
+    //         return true;
+    //     } else return false;
+    // }
 }
