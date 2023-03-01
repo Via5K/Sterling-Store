@@ -210,7 +210,8 @@ contract Voting {
             "Please own a Special NFT in order to Caste your Vote"
         );
         // nft_.StakeSpecialNFT(msg.sender, _till);
-        nft_.StakeSpecialNFT(msg.sender, block.timestamp + 8400);
+        //Set deafult time to 1Day = 86400 Seconds
+        nft_.StakeSpecialNFT(msg.sender, block.timestamp + 86400);
         votingRecord[_id].hasVoted[msg.sender] = true;
         votingRecord[_id].votedFor[msg.sender] = _votedFor;
         votingRecord[_id].voteCount[_votedFor] += 1;

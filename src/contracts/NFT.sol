@@ -1042,10 +1042,45 @@ contract NFT is ERC721 {
     //BURN FUNCTION, NEED TO MODIFY THE STATUS,
     //CHANGE ALL THE OTHER MAPPING AND MAKKE SURE IT DOES NOT CLASHES WITH EXPIREABLE.
 
-    // function burnMyToken(uint256 _tokenId, address _off) public returns (bool) {
-    //     if (ownerOf(_tokenId) == _off) {
-    //         _burn(_tokenId);
-    //         return true;
-    //     } else return false;
-    // }
+    function burnMyToken(uint256 _tokenId, address _off) public returns (bool) {
+        require(getNFTtype(_tokenId)!=4, "Cannot Burn A Non Transferable Token!!");
+        if (ownerOf(_tokenId) == _off) {
+            _burn(_tokenId);
+            return true;
+        } else return false;
+    }
+    // We can do a simple thing, that is we can create a database for the current user only.
+    // In this database we will make sure that, it is for this user only and the timestamps.
+    // Listed will be checked with what is current time. If the time is passed, then we will
+    // Call the blockchain, and do the needful.
+    // Otherwise we will not do anything. 
+    // We will do this so that the number of calls are reduced in the contract.
+    
+    
+    //simply call this function recursively whenever page is refreshed....
+    //reIssue the NFT for prelaunch. Like once the prelaunch nft timer goes off, then add a new nft based on the specs.
+    function reIssueNFTForPreLaunch(address _off) public {
+        uint[] memory userOwnedIds = AllPreLaunchNFT[_off];
+        for(uint i=0;i<userOwnedIds.length;i++){
+            if(ifTimeHasPassed(NFTinfo[userOwnedIds[i]].ExpireOn)){
+                //generate a new special nft for the same
+                this._Special(NFTs[userOwnedIds[i]],
+                            NFTinfo[userOwnedIds[i]].minted,
+                            NFTinfo[userOwnedIds[i]].name,
+                            NFTinfo[userOwnedIds[i]].description,
+                            NFTinfo[userOwnedIds[i]].url,
+                            NFTinfo[userOwnedIds[i]].trxnHash,
+                            NFTinfo[userOwnedIds[i]].nftType,
+                            NFTinfo[userOwnedIds[i]].boughtOn,
+                            NFTinfo[userOwnedIds[i]].seller,
+                            NFTinfo[userOwnedIds[i]].ExpireOn,
+                            _off);
+                //remove this nft form the prelaunch
+                userOwnedIds = removeNFTfromAddress(userOwnedIds[i], address(this), userOwnedIds);
+                i--;
+            }
+        }
+        AllPreLaunchNFT[_off] =userOwnedIds;
+    }
+
 }
