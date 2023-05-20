@@ -1,0 +1,3 @@
+const nft = await NFT.deployed()
+const caller = await Caller.deployed()
+caller.createNFT(10, 1, 'neeraj', 'new nft', 'nft desc', 'nft url', '0x1320ab51BFfEdE5F35eCc32Ed6D208c0b98C421B', '0x1320ab51BFfEdE5F35eCc32Ed6D208c0b98C421B', '12910')

@@ -5,43 +5,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voting</title>
-    <style>
-        .btn {
-            border-radius: 30px;
-            border-style: groove;
-            align-items: center;
-            align-content: center;
-        }
-
-        /* .btn:nth-child(1) {
-            margin-right: 100px;
-        } */
-
-        .nav {
-            margin-inline-start: 70%;
-        }
-
-        .newVoting {
-            border: 10px;
-        }
-    </style>
+    <title>marketplace</title>
 </head>
 
+<!-- 
+
+    Process to be follwoed
+    first we will list all the NFTS that are available to buy. from this method: (availableToBuy)
+    then we will have a option to buy the NFT (buyNFT)
+    then we also have an option to add the NFT for selling (addForSell)
+    then we also have an option to remove the NFT from selling (removeFromSell)
+    can view teh NFTs that are staked by the user (viewMyStakedNFTs)
+    this is a refresh function (reIssueNFTForPreLaunch) Will not be done in this scope
+ -->
+
 <body>
-    <div class="nav">
-
-        <button>+New Voting</button>
-        <button>+Vote</button>
-        <button>Previous Winners</button>
-
-    </div>
-
-    <!-- returns total number of votings that are currrently active in the 
-    blockcahin.  -->
-
-    <h1 id="activeVotingLength">Active Votings Length</h1>
-    <button onclick="activeVotingLength()">Find Active Voting Length</button>
+    <!-- Click on the listed item and click on buy.
+    then, from that NFT information thaat we have, send that token ID now to blockchain. This will be happening in background.
+    Will not be done by user.
+    -->
+    <form action="">
+        <input type="text" placeholder="_tokenId" id="_tokenId" name="_tokenId"> <br>
+    </form>
+    <button onclick="buyNFT()">Buy NFT</button>
 
     <!-- <p>Forgot your Unique ID? With this you can find the ID of your voting.</p>
     <h1 id="findActiveVotingsId">Find Active Voting's ID From Index</h1>
@@ -108,16 +94,8 @@ ONCE THE PERSON SELECTS WHO HE WANTS TO VOTE, YOU CAN SEND THE CHOICE BACK TO BL
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.0/web3.min.js"
         integrity="sha512-RGPKVfQewHGfk9yaB7ThGPKAQU+civS5awsfStLg22jrWbqgDkNzPtIwNFpFApr3ccjB730SRxi+KnDjhIuTpw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./marketplace.js"></script>
     <script src="./Voting.js"></script>
 </body>
 
 </html>
-
-<!-- PROCESS FOR VOTING. 
-1. CREATE NEW VOTING 
-2. ADD CHOICES
-3. VIEW CHOICES
-4. START VOTING
-5. CAST A NEW VOTE
-6. CHECK RESULT
--->
