@@ -164,7 +164,9 @@ contract NFT is ERC721 {
     uint: nftType
     address: seller
     *****/
-    function viewNFTPropByIndex1(uint256 _tokenId)
+    function viewNFTPropByIndex1(
+        uint256 _tokenId
+    )
         public
         view
         returns (
@@ -184,16 +186,9 @@ contract NFT is ERC721 {
         );
     }
 
-    function viewNFTPropByIndex2(uint256 _tokenId)
-        public
-        view
-        returns (
-            uint256,
-            address,
-            uint256,
-            bool
-        )
-    {
+    function viewNFTPropByIndex2(
+        uint256 _tokenId
+    ) public view returns (uint256, address, uint256, bool) {
         return (
             NFTinfo[_tokenId].boughtOn,
             NFTinfo[_tokenId].seller,
@@ -306,11 +301,9 @@ contract NFT is ERC721 {
         return NFTs[_id];
     }
 
-    function viewAllTokens(address _off)
-        public
-        view
-        returns (uint256[] memory)
-    {
+    function viewAllTokens(
+        address _off
+    ) public view returns (uint256[] memory) {
         uint256[] memory allUserTokensNontransfer = AllNonTransferrableNFT[
             _off
         ];
@@ -348,11 +341,9 @@ contract NFT is ERC721 {
     }
 
     //this function returns all the tokens with nft info.
-    function viewPersonalNFT(address _off)
-        public
-        view
-        returns (nftProp[] memory)
-    {
+    function viewPersonalNFT(
+        address _off
+    ) public view returns (nftProp[] memory) {
         // uint[] memory allOwnedTokens = viewAllTokens();
         uint256[] memory allOwnedTokens = viewAllTokens(_off);
         nftProp[] memory NFTpropDetail = new nftProp[](allOwnedTokens.length);
@@ -364,11 +355,10 @@ contract NFT is ERC721 {
     }
 
     //same above function but contains another parameter allownedTokens.
-    function userPersonalNFTinfo(address _off, uint256[] memory allOwnedTokens)
-        public
-        view
-        returns (nftProp[] memory)
-    {
+    function userPersonalNFTinfo(
+        address _off,
+        uint256[] memory allOwnedTokens
+    ) public view returns (nftProp[] memory) {
         // uint[] memory allOwnedTokens = viewAllTokens(_off);
         nftProp[] memory NFTpropDetail = new nftProp[](allOwnedTokens.length);
         for (uint256 i = 0; i < allOwnedTokens.length; i++) {
@@ -378,11 +368,10 @@ contract NFT is ERC721 {
         return NFTpropDetail;
     }
 
-    function userStakedNFTinfo(address _user, uint256[] memory allOwnedTokens)
-        public
-        view
-        returns (stakeProp[] memory)
-    {
+    function userStakedNFTinfo(
+        address _user,
+        uint256[] memory allOwnedTokens
+    ) public view returns (stakeProp[] memory) {
         stakeProp[] memory stakePropDetail = new stakeProp[](
             allOwnedTokens.length
         );
@@ -395,11 +384,9 @@ contract NFT is ERC721 {
         return stakePropDetail;
     }
 
-    function viewUserStakedNFT(address _user)
-        public
-        view
-        returns (nftProp[] memory, stakeProp[] memory)
-    {
+    function viewUserStakedNFT(
+        address _user
+    ) public view returns (nftProp[] memory, stakeProp[] memory) {
         uint256[] memory allStakedTokens = getAllStakedNFTFromAddress(_user);
         // uint[] memory allOwnedTokens = viewAllTokens();
         // uint[] memory allOwnedTokens = viewAllTokens(_user);
@@ -607,11 +594,9 @@ contract NFT is ERC721 {
     *****/
     mapping(address => uint256[]) _ownerOwnedIds;
 
-    function getAllOwnerOwnedIds(address _user)
-        public
-        view
-        returns (uint256[] memory)
-    {
+    function getAllOwnerOwnedIds(
+        address _user
+    ) public view returns (uint256[] memory) {
         return _ownerOwnedIds[_user];
     }
 
@@ -718,11 +703,9 @@ contract NFT is ERC721 {
     Returns:
     uint[]: an array containing all the tokenIds staked of that user.
     *****/
-    function getAllStakedNFTFromAddress(address _off)
-        public
-        view
-        returns (uint256[] memory)
-    {
+    function getAllStakedNFTFromAddress(
+        address _off
+    ) public view returns (uint256[] memory) {
         return AllStakedNFT[_off];
     }
 
@@ -734,11 +717,10 @@ contract NFT is ERC721 {
     Returns:
     uint, uint
     *****/
-    function getStakedNFTProp(address _off, uint256 _tokenId)
-        public
-        view
-        returns (uint256, uint256)
-    {
+    function getStakedNFTProp(
+        address _off,
+        uint256 _tokenId
+    ) public view returns (uint256, uint256) {
         return (
             StakedNFTs[_off][_tokenId]._stakedOn,
             StakedNFTs[_off][_tokenId]._stakedTill
@@ -762,7 +744,7 @@ contract NFT is ERC721 {
     }
 
     /****
-    availableToBuy function returns the total number of NFT's that this user have.
+    myTotalNFTCount function returns the total number of NFT's that this user have.
     Parameters:
     address: address of the user whose NFT count you want to know.
     Returns:
@@ -783,11 +765,9 @@ contract NFT is ERC721 {
     ****/
     //returns the information about the staked NFT.
     //return information includes, nftProp[] and stakedProp[].
-    function viewMyStakedNFTs(address _user)
-        public
-        view
-        returns (nftProp[] memory, stakeProp[] memory)
-    {
+    function viewMyStakedNFTs(
+        address _user
+    ) public view returns (nftProp[] memory, stakeProp[] memory) {
         return viewUserStakedNFT(_user);
     }
 
@@ -907,6 +887,10 @@ contract NFT is ERC721 {
             forSellArray[counter] = forSellArray[forSellArray.length - 1];
             forSellArray.pop();
         }
+        //otherwise just remove the item.
+        else {
+            forSellArray.pop();
+        }
     }
 
     /****
@@ -1023,11 +1007,10 @@ contract NFT is ERC721 {
 
     Because pop function in arrays is giving memory storage issue so created new function.
     ****/
-    function shrinkArray(uint256[] memory array, uint256 newLength)
-        internal
-        pure
-        returns (uint256[] memory)
-    {
+    function shrinkArray(
+        uint256[] memory array,
+        uint256 newLength
+    ) internal pure returns (uint256[] memory) {
         require(
             newLength <= array.length,
             "Array: length after shrinking larger than before"
@@ -1043,44 +1026,52 @@ contract NFT is ERC721 {
     //CHANGE ALL THE OTHER MAPPING AND MAKKE SURE IT DOES NOT CLASHES WITH EXPIREABLE.
 
     function burnMyToken(uint256 _tokenId, address _off) public returns (bool) {
-        require(getNFTtype(_tokenId)!=4, "Cannot Burn A Non Transferable Token!!");
+        require(
+            getNFTtype(_tokenId) != 4,
+            "Cannot Burn A Non Transferable Token!!"
+        );
         if (ownerOf(_tokenId) == _off) {
             _burn(_tokenId);
             return true;
         } else return false;
     }
+
     // We can do a simple thing, that is we can create a database for the current user only.
     // In this database we will make sure that, it is for this user only and the timestamps.
     // Listed will be checked with what is current time. If the time is passed, then we will
     // Call the blockchain, and do the needful.
-    // Otherwise we will not do anything. 
+    // Otherwise we will not do anything.
     // We will do this so that the number of calls are reduced in the contract.
-    
-    
+
     //simply call this function recursively whenever page is refreshed....
     //reIssue the NFT for prelaunch. Like once the prelaunch nft timer goes off, then add a new nft based on the specs.
     function reIssueNFTForPreLaunch(address _off) public {
         uint[] memory userOwnedIds = AllPreLaunchNFT[_off];
-        for(uint i=0;i<userOwnedIds.length;i++){
-            if(ifTimeHasPassed(NFTinfo[userOwnedIds[i]].ExpireOn)){
+        for (uint i = 0; i < userOwnedIds.length; i++) {
+            if (ifTimeHasPassed(NFTinfo[userOwnedIds[i]].ExpireOn)) {
                 //generate a new special nft for the same
-                this._Special(NFTs[userOwnedIds[i]],
-                            NFTinfo[userOwnedIds[i]].minted,
-                            NFTinfo[userOwnedIds[i]].name,
-                            NFTinfo[userOwnedIds[i]].description,
-                            NFTinfo[userOwnedIds[i]].url,
-                            NFTinfo[userOwnedIds[i]].trxnHash,
-                            NFTinfo[userOwnedIds[i]].nftType,
-                            NFTinfo[userOwnedIds[i]].boughtOn,
-                            NFTinfo[userOwnedIds[i]].seller,
-                            NFTinfo[userOwnedIds[i]].ExpireOn,
-                            _off);
+                this._Special(
+                    NFTs[userOwnedIds[i]],
+                    NFTinfo[userOwnedIds[i]].minted,
+                    NFTinfo[userOwnedIds[i]].name,
+                    NFTinfo[userOwnedIds[i]].description,
+                    NFTinfo[userOwnedIds[i]].url,
+                    NFTinfo[userOwnedIds[i]].trxnHash,
+                    NFTinfo[userOwnedIds[i]].nftType,
+                    NFTinfo[userOwnedIds[i]].boughtOn,
+                    NFTinfo[userOwnedIds[i]].seller,
+                    NFTinfo[userOwnedIds[i]].ExpireOn,
+                    _off
+                );
                 //remove this nft form the prelaunch
-                userOwnedIds = removeNFTfromAddress(userOwnedIds[i], address(this), userOwnedIds);
+                userOwnedIds = removeNFTfromAddress(
+                    userOwnedIds[i],
+                    address(this),
+                    userOwnedIds
+                );
                 i--;
             }
         }
-        AllPreLaunchNFT[_off] =userOwnedIds;
+        AllPreLaunchNFT[_off] = userOwnedIds;
     }
-
 }

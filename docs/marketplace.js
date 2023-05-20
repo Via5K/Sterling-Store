@@ -1845,7 +1845,7 @@ async function removeFromSellNFT() {
     var nftaddress = '0x3E6Bf53D12e1d27c771E7FF7Bc375Df20bb9Ec11';
     var nftcontract = await new web3.eth.Contract(abi, nftaddress)
     var tokenId = document.getElementById("___tokenId").value;
-    var result = await nftcontract.methods.removeFromSell(tokenId).send({
+    var result = await nftcontract.methods.removeFromSell(tokenId).call({
         from: account
     }, function (err, res) {
         if (err) {
