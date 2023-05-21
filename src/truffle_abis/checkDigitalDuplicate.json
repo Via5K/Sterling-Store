@@ -28,8 +28,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -48,8 +47,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -104,8 +102,7 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -129,8 +126,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_newAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"_companyName\",\"type\":\"string\"}],\"name\":\"addCompanyAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_user\",\"type\":\"address\"}],\"name\":\"addVerifiedUser\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_current\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"_companyName\",\"type\":\"string\"}],\"name\":\"autoCheck\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"companyAddresses\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"toggle\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"companyName\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_original\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_current\",\"type\":\"address\"}],\"name\":\"manualCheck\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"verifiedUserList\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/contracts/CheckDigitalDuplicate.sol\":\"checkDigitalDuplicate\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/src/contracts/CheckDigitalDuplicate.sol\":{\"keccak256\":\"0xb8d7abd28a6a9f69c0eceb37b2c12bb06cfe2a17299d86e66d1b5fa238b4fe01\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9c47cd1cffc59be72eae287e8fbcc7229a7f341147cd092f10742fc2be0f6005\",\"dweb:/ipfs/QmXSndjz6HQ6igSzQ1c2Bcex7uttge6szQjxJYJDXJzcNt\"]}},\"version\":1}",
@@ -7793,8 +7789,7 @@
     }
   },
   "schemaVersion": "3.4.11",
-  "updatedAt": "2023-05-20T13:03:55.953Z",
-  "networkType": "ethereum",
+  "updatedAt": "2023-05-21T13:19:52.986Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
