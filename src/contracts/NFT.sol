@@ -957,7 +957,10 @@ contract NFT is ERC721 {
             //swap
             forSellArray[counter] = forSellArray[forSellArray.length - 1];
             forSellArray.pop();
+        } else {
+            forSellArray.pop();
         }
+        _transfer(_off, msg.sender, _tokenId);
     }
 
     /****
