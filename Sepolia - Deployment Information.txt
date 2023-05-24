@@ -1,0 +1,134 @@
+PS C:\Users\Neeraj\Desktop\Sterling Store> truffle migrate --reset --network sepolia
+
+Compiling your contracts...
+===========================
+> Compiling .\src\contracts\Caller.sol-bin. Attempt #1
+> Compiling .\src\contracts\CheckDigitalDuplicate.sol
+> Compiling .\src\contracts\CheckRefurbished.sol
+> Compiling .\src\contracts\Migrations.sol
+> Compiling .\src\contracts\NFT.sol
+> Compiling .\src\contracts\NFT.sol
+> Compiling .\src\contracts\SellerAuth.sol
+> Compiling .\src\contracts\Voting.sol
+
+> Artifacts written to C:\Users\Neeraj\Desktop\Sterling Store\src\truffle_abis
+> Compiled successfully using:
+   - solc: 0.8.20+commit.a1b79de6.Emscripten.clang
+⠸ Fetching solc version list from solc-bin. Attempt #1
+⠏ Fetching solc version list from solc-bin. Attempt #1
+Starting migrations...
+======================
+> Network name:    'sepolia'
+> Network id:      11155111
+> Block gas limit: 30000000 (0x1c9c380)
+
+
+1_initial_migration.js
+======================
+⠋ Fetching solc version list from solc-bin. Attempt #1
+   Replacing 'Migrations'
+   ----------------------
+   > transaction hash:    0x6a8b40bdf84435d9d49071565818c7c12236079e9bed8f72bb4b376a9ae15de4
+   > Blocks: 1            Seconds: 13c-bin. Attempt #1
+   > contract address:    0x9DEE74FeD43CcE31c07Bd4249ee7AE192476E43C
+   > block number:        3546825
+   > block timestamp:     1684890612
+   > account:             0xDAC7771a245e9Ca9269eb433293A2Ac765bfD78D
+   > balance:             0.96784934740309151
+   > gas used:            246636 (0x3c36c)
+   > gas price:           2.500000007 gwei
+   > value sent:          0 ETH
+   > total cost:          0.000616590001726452 ETH
+
+   > Saving migration to chain.om solc-bin. Attempt #1
+   > Saving artifacts to chain.
+   -------------------------------------
+   > Total cost:     0.000616590001726452 ETH
+
+⠙ Fetching solc version list from solc-bin. Attempt #1
+2_deploy_contracts.js
+=====================
+⠦ Fetching solc version list from solc-bin. Attempt #1
+   Deploying 'NFT'
+   ---------------
+   > transaction hash:    0xb7c73f5d20b2c48b069df95298b1b5b462f4a1c10d6bec3e2e7d9cd7eba949a6
+   > Blocks: 1            Seconds: 29c-bin. Attempt #1
+   > contract address:    0xEECAde99CeF4a95594F0E3b3b42bBbce8d1E495C
+   > block number:        3546828
+   > block timestamp:     1684890660
+   > account:             0xDAC7771a245e9Ca9269eb433293A2Ac765bfD78D
+   > balance:             0.954818802366605984
+   > gas used:            5166516 (0x4ed5b4)
+   > gas price:           2.500000007 gwei
+   > value sent:          0 ETH
+   > total cost:          0.012916290036165612 ETH
+
+⠼ Fetching solc version list from solc-bin. Attempt #1
+   Deploying 'checkDigitalDuplicate'
+   ---------------------------------
+   > transaction hash:    0xfb66c00660f15e13a9f41fcfd2daeba4c02eebf098cdae1719594f970a4e29e2
+   > Blocks: 0            Seconds: 4lc-bin. Attempt #1
+   > contract address:    0xf6A44e8739DD581055D1dA5B6179E002DC8FC19d
+   > block number:        3546829
+   > block timestamp:     1684890672
+   > account:             0xDAC7771a245e9Ca9269eb433293A2Ac765bfD78D
+   > balance:             0.953410392362662436
+   > gas used:            563364 (0x898a4)
+   > gas price:           2.500000007 gwei
+   > value sent:          0 ETH
+   > total cost:          0.001408410003943548 ETH
+
+⠋ Fetching solc version list from solc-bin. Attempt #1
+   Deploying 'checkRefurbished'
+   ----------------------------
+   > transaction hash:    0xccc65436aef1fefec86db611c3f6530d07159c40bed76b72c7ca26bbfbee08dc
+   > Blocks: 2            Seconds: 17c-bin. Attempt #1
+   > contract address:    0x860Bf5B34c2b87C992dC24ABb22242F0AD48b52F
+   > block number:        3546831
+   > block timestamp:     1684890696
+   > account:             0xDAC7771a245e9Ca9269eb433293A2Ac765bfD78D
+   > balance:             0.940439449826343797
+   > gas used:            5188377 (0x4f2b19)
+   > gas price:           2.500000007 gwei
+   > value sent:          0 ETH
+   > total cost:          0.012970942536318639 ETH
+
+⠹ Fetching solc version list from solc-bin. Attempt #1
+   Deploying 'Voting'
+   ------------------
+   > transaction hash:    0x2f5cf98e1c9a6f7655c836134dcc06c894dbb6e9b905c310359938ca127c648b
+   > Blocks: 2            Seconds: 16c-bin. Attempt #1
+   > contract address:    0x06cAe43E2666269501dC4BEbFcfFd48f17498095
+   > block number:        3546833
+   > block timestamp:     1684890720
+   > account:             0xDAC7771a245e9Ca9269eb433293A2Ac765bfD78D
+   > balance:             0.936807952316175604
+   > gas used:            1452599 (0x162a37)
+   > gas price:           2.500000007 gwei
+   > value sent:          0 ETH
+   > total cost:          0.003631497510168193 ETH
+
+⠋ Fetching solc version list from solc-bin. Attempt #1
+   Deploying 'Caller'
+   ------------------
+   > transaction hash:    0xdc827c244ec031324f9893425e05635298726c267daa790b8e4d3f520aaf921c
+   > Blocks: 2            Seconds: 21c-bin. Attempt #1
+   > contract address:    0xa08727770Cee812248b2C21ba40ADCF2FC09C7ce
+   > block number:        3546835
+   > block timestamp:     1684890744
+   > account:             0xDAC7771a245e9Ca9269eb433293A2Ac765bfD78D
+   > balance:             0.935844067313476726
+   > gas used:            385554 (0x5e212)
+   > gas price:           2.500000007 gwei
+   > value sent:          0 ETH
+   > total cost:          0.000963885002698878 ETH
+
+   > Saving migration to chain.om solc-bin. Attempt #1
+   > Saving artifacts to chain.
+   -------------------------------------
+   > Total cost:     0.03189102508929487 ETH
+
+Summary
+=======
+> Total deployments:   6
+> Final cost:          0.032507615091021322 ETH
