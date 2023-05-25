@@ -1,3 +1,17 @@
 const nft = await NFT.deployed()
 const caller = await Caller.deployed()
-CREATE A NEW NFT: caller.createNFT(10, 1, 'neeraj', 'new nft', 'nft desc', 'nft url', '0x1320ab51BFfEdE5F35eCc32Ed6D208c0b98C421B', '0x1320ab51BFfEdE5F35eCc32Ed6D208c0b98C421B', '12910')
+caller.createNFT(10, 1, 'neeraj', 'new nft', 'nft desc', 'nft url', '0x1320ab51BFfEdE5F35eCc32Ed6D208c0b98C421B', '0x1320ab51BFfEdE5F35eCc32Ed6D208c0b98C421B', '12910')
+
+
+
+//NOTES
+
+0. Make sure there are 4 wallets setupped. With atleast 1 ether in all of them.
+1. Create 8 NFTS From console. (2 of each type) + 5 Special NFTS
+2. Make sure some of them has expiration time so that we can sho them that these NFTS are being expired
+3. Now, first we will give the ECOM_UC_01 - as Voting by creating a voting, then adding the choices in the voting, Then we will give the use case if the voting has not started, the vote will not be casted, then we will cast some votes, then we will make sure that once casted we check for result directly, then once this fails, we will check for the result by declaring the result.
+4. USe case for digital duplicate : [practically can't be shown but have a workaround such that we will give a entry in our blockchain with the name of the company such that NEERAJ-ADDR. and then in frontedn we will say that NEERAJ-DifferentADDR. ]
+5. Generating NFT's from createNFT method. (show different UC by giving different params)
+6. We will then have marketplace setupped, such that, the marketplace created should be testes for my nfts first, then the information about those nfts should be fetched, then we can say that which all nfts are available for sell, then we can add for sell and then from diff acc, remove it from sell , this should fail and then we will try to buy from didff a/c this should sucess. Then we will check the avail nft in this wallet and also avail. to buy nfts.
+7. we can also show the UC of reissue prelaunch NFT, by passing the expiration time in the createNFT so it can be re-issued once the nft prelaunch time is completed..
+8. Showing the usecase of refirbushed. that nft, once sold the nft is refurbished and that can be confirmed via the refurb button. if the nft has been sold once, it will come as a refurb item otherwise not.

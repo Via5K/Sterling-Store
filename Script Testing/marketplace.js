@@ -1,3 +1,4 @@
+var nftaddress = '0xEECAde99CeF4a95594F0E3b3b42bBbce8d1E495C';
 var abi = [{
         "inputs": [],
         "stateMutability": "nonpayable",
@@ -1746,6 +1747,8 @@ var abi = [{
         "stateMutability": "nonpayable",
         "type": "function"
     }
+
+
 ];
 
 async function loadWeb3() {
@@ -1768,11 +1771,11 @@ async function getCurrentAccount() {
 async function availableToBuy() {
     load();
     const account = await getCurrentAccount();
-    var nftaddress = '0x3E6Bf53D12e1d27c771E7FF7Bc375Df20bb9Ec11';
+
     var nftcontract = await new web3.eth.Contract(abi, nftaddress)
     var result = await nftcontract.methods.availableToBuy().call({
         from: account
-    }, function (err, res) {
+    }, function(err, res) {
         if (err) {
             console.log(err);
         } else if (res) {
@@ -1786,14 +1789,12 @@ async function viewnfts() {
     const account = await getCurrentAccount();
 
 
-    var nftaddress = '0x3E6Bf53D12e1d27c771E7FF7Bc375Df20bb9Ec11';
-
     var nftcontract = await new web3.eth.Contract(abi, nftaddress)
-    // var tokenId = document.getElementById("_tokenId").value;
+        // var tokenId = document.getElementById("_tokenId").value;
 
     var result = await nftcontract.methods.viewMyNFTS(account).call({
         from: account
-    }, function (err, res) {
+    }, function(err, res) {
         if (err) {
             console.log(err);
         } else {
@@ -1806,12 +1807,12 @@ async function viewnfts() {
 async function buyNFT() {
     load();
     const account = await getCurrentAccount();
-    var nftaddress = '0x3E6Bf53D12e1d27c771E7FF7Bc375Df20bb9Ec11';
+
     var nftcontract = await new web3.eth.Contract(abi, nftaddress)
     var tokenId = document.getElementById("_tokenId").value;
     var result = await nftcontract.methods.buyNFT(tokenId).send({
         from: account
-    }, function (err, res) {
+    }, function(err, res) {
         if (err) {
             console.log(err);
         } else if (res) {
@@ -1824,12 +1825,12 @@ async function buyNFT() {
 async function sellNFT() {
     load();
     const account = await getCurrentAccount();
-    var nftaddress = '0x3E6Bf53D12e1d27c771E7FF7Bc375Df20bb9Ec11';
+
     var nftcontract = await new web3.eth.Contract(abi, nftaddress)
     var tokenId = document.getElementById("__tokenId").value;
     var result = await nftcontract.methods.addForSell(tokenId).send({
         from: account
-    }, function (err, res) {
+    }, function(err, res) {
         if (err) {
             console.log(err);
         } else if (res) {
@@ -1842,12 +1843,26 @@ async function sellNFT() {
 async function removeFromSellNFT() {
     load();
     const account = await getCurrentAccount();
-    var nftaddress = '0x3E6Bf53D12e1d27c771E7FF7Bc375Df20bb9Ec11';
     var nftcontract = await new web3.eth.Contract(abi, nftaddress)
     var tokenId = document.getElementById("___tokenId").value;
     var result = await nftcontract.methods.removeFromSell(tokenId).send({
         from: account
-    }, function (err, res) {
+    }, function(err, res) {
+        if (err) {
+            console.log(err);
+        } else if (res) {
+            console.log(res);
+        }
+    });
+}
+
+async function reIssuePreLaunchNFT() {
+    load();
+    const account = await getCurrentAccount();
+    var nftcontract = await new web3.eth.Contract(abi, nftaddress)
+    var result = await nftcontract.methods.reIssueNFTForPreLaunch(account).send({
+        from: account
+    }, function(err, res) {
         if (err) {
             console.log(err);
         } else if (res) {

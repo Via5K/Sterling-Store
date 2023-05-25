@@ -1,18 +1,3 @@
-async function loadWeb3() {
-    if (window.ethereum) {
-        window.web3 = new Web3(window.ethereum);
-        window.ethereum.enable();
-    }
-}
-async function load() {
-    await loadWeb3();
-}
-async function getCurrentAccount() {
-    const accounts = await window.web3.eth.getAccounts();
-    return accounts[0];
-}
-
-//ABI OF VOTING CONTRACT
 var abi = [{
         "inputs": [{
             "internalType": "contract NFT",
@@ -60,7 +45,7 @@ var abi = [{
             "name": "_index",
             "type": "uint256"
         }],
-        "name": "activeVotings",
+        "name": "findActiveVotingsId",
         "outputs": [{
             "internalType": "string",
             "name": "",
@@ -197,19 +182,35 @@ var abi = [{
         "stateMutability": "nonpayable",
         "type": "function"
     }
-];
+]
+async function loadWeb3() {
+    if (window.ethereum) {
+        window.web3 = new Web3(window.ethereum);
+        window.ethereum.enable();
+    }
+}
+async function load() {
+    await loadWeb3();
+}
+async function getCurrentAccount() {
+    const accounts = await window.web3.eth.getAccounts();
+    return accounts[0];
+}
+
+//ABI OF VOTING CONTRACT
+
 
 async function checkResult() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x9adEE10b08211705d62E4a290A466Ff50A29A95f';
+    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var _id = document.getElementById('_checkResultId').value;
 
 
     var result = await votingContract.methods.checkResult(_id).call({
         from: account
-    }, function(err, result) {
+    }, function (err, result) {
         if (err) {
             console.log("Error");
             console.log(err);
@@ -225,14 +226,14 @@ async function checkResult() {
 async function newVote() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x9adEE10b08211705d62E4a290A466Ff50A29A95f';
+    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var _id = document.getElementById('_newVoteId').value;
     var _votedFor = document.getElementById('_votedFor').value;
 
     var result = await votingContract.methods.newVote(_id, _votedFor).send({
         from: account
-    }, function(err, result) {
+    }, function (err, result) {
         if (err) {
             console.log("Error");
             console.log(err);
@@ -249,13 +250,13 @@ async function newVote() {
 async function startVoting() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x9adEE10b08211705d62E4a290A466Ff50A29A95f';
+    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var _id = document.getElementById('_startVotingId').value;
 
     var result = await votingContract.methods.startVoting(_id).send({
         from: account
-    }, function(err, result) {
+    }, function (err, result) {
         if (err) {
             console.log("Error");
             console.log(err);
@@ -270,13 +271,13 @@ async function startVoting() {
 async function viewChoices() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x9adEE10b08211705d62E4a290A466Ff50A29A95f';
+    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var _id = document.getElementById('_viewChoiceId').value;
 
     var result = await votingContract.methods.viewChoices(_id).call({
         from: account
-    }, function(err, result) {
+    }, function (err, result) {
         if (err) {
             console.log("Error");
             console.log(err);
@@ -297,13 +298,13 @@ async function viewChoices() {
 async function addChoices() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x9adEE10b08211705d62E4a290A466Ff50A29A95f';
+    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var _id = document.getElementById('_id').value;
     var _contestant = document.getElementById('_contestant').value;
     var result = await votingContract.methods.addChoices(_id, _contestant).send({
         from: account
-    }, function(err, result) {
+    }, function (err, result) {
         if (err) {
             console.log("Error");
             console.log(err);
@@ -330,13 +331,13 @@ function _UqUrl() {
 async function createNewVoting() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x9adEE10b08211705d62E4a290A466Ff50A29A95f';
+    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var _id = _UqUrl();
     var _votingName = document.getElementById('_votingName').value;
     var result = await votingContract.methods.createNewVoting(_id, _votingName).send({
         from: account
-    }, function(err, result) {
+    }, function (err, result) {
         if (err) {
             console.log("Error");
             console.log(err);
@@ -353,12 +354,12 @@ async function createNewVoting() {
 async function getVotingName() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x9adEE10b08211705d62E4a290A466Ff50A29A95f';
+    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var _tokenId = document.getElementById('_tokenId').value;
     var result = await votingContract.methods.getVotingName(_tokenId).call({
         from: account
-    }, function(err, result) {
+    }, function (err, result) {
         if (err) {
             console.log("Error");
             console.log(err);
@@ -375,13 +376,13 @@ async function getVotingName() {
 async function findActiveVotingsId() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x9adEE10b08211705d62E4a290A466Ff50A29A95f';
+    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var _index = document.getElementById('_index').value;
     //once redeployed, make sure to change the method name here too... rename it as. findActiveVotingsId
     var result = await votingContract.methods.activeVotings(_index).call({
         from: account
-    }, function(err, result) {
+    }, function (err, result) {
         if (err) {
             console.log("Error");
             console.log(err);
@@ -396,11 +397,11 @@ async function findActiveVotingsId() {
 async function activeVotingLength() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x9adEE10b08211705d62E4a290A466Ff50A29A95f';
+    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var result = await votingContract.methods.activeVotingLength().call({
         from: account
-    }, function(err, result) {
+    }, function (err, result) {
         if (err) {
             console.log("Error");
             console.log(err);
