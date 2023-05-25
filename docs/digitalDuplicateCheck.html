@@ -39,111 +39,116 @@
     <button onclick="addVerifiedUser()">Add new verified User</button>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.0/web3.min.js" integrity="sha512-RGPKVfQewHGfk9yaB7ThGPKAQU+civS5awsfStLg22jrWbqgDkNzPtIwNFpFApr3ccjB730SRxi+KnDjhIuTpw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.0/web3.min.js"
+        integrity="sha512-RGPKVfQewHGfk9yaB7ThGPKAQU+civS5awsfStLg22jrWbqgDkNzPtIwNFpFApr3ccjB730SRxi+KnDjhIuTpw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
     </script>
     <script>
-        var abi = [{
-            "inputs": [],
-            "stateMutability": "nonpayable",
-            "type": "constructor"
-        }, {
-            "inputs": [{
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }],
-            "name": "companyAddresses",
-            "outputs": [{
-                "internalType": "bool",
-                "name": "toggle",
-                "type": "bool"
-            }, {
-                "internalType": "string",
-                "name": "companyName",
-                "type": "string"
-            }],
-            "stateMutability": "view",
-            "type": "function",
-            "constant": true
-        }, {
-            "inputs": [{
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }],
-            "name": "verifiedUserList",
-            "outputs": [{
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }],
-            "stateMutability": "view",
-            "type": "function",
-            "constant": true
-        }, {
-            "inputs": [{
-                "internalType": "address",
-                "name": "_user",
-                "type": "address"
-            }],
-            "name": "addVerifiedUser",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        }, {
-            "inputs": [{
-                "internalType": "address",
-                "name": "_newAddress",
-                "type": "address"
-            }, {
-                "internalType": "string",
-                "name": "_companyName",
-                "type": "string"
-            }],
-            "name": "addCompanyAddress",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        }, {
-            "inputs": [{
-                "internalType": "address",
-                "name": "_original",
-                "type": "address"
-            }, {
-                "internalType": "address",
-                "name": "_current",
-                "type": "address"
-            }],
-            "name": "manualCheck",
-            "outputs": [{
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }],
-            "stateMutability": "pure",
-            "type": "function",
-            "constant": true
-        }, {
-            "inputs": [{
-                "internalType": "address",
-                "name": "_current",
-                "type": "address"
-            }, {
-                "internalType": "string",
-                "name": "_companyName",
-                "type": "string"
-            }],
-            "name": "autoCheck",
-            "outputs": [{
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }],
-            "stateMutability": "view",
-            "type": "function",
-            "constant": true
-        }];
+        var ddaddress = '0xf6A44e8739DD581055D1dA5B6179E002DC8FC19d';
+        var abi = [
 
+            {
+                "inputs": [],
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+            }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }],
+                "name": "companyAddresses",
+                "outputs": [{
+                    "internalType": "bool",
+                    "name": "toggle",
+                    "type": "bool"
+                }, {
+                    "internalType": "string",
+                    "name": "companyName",
+                    "type": "string"
+                }],
+                "stateMutability": "view",
+                "type": "function",
+                "constant": true
+            }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }],
+                "name": "verifiedUserList",
+                "outputs": [{
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }],
+                "stateMutability": "view",
+                "type": "function",
+                "constant": true
+            }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "_user",
+                    "type": "address"
+                }],
+                "name": "addVerifiedUser",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "_newAddress",
+                    "type": "address"
+                }, {
+                    "internalType": "string",
+                    "name": "_companyName",
+                    "type": "string"
+                }],
+                "name": "addCompanyAddress",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "_original",
+                    "type": "address"
+                }, {
+                    "internalType": "address",
+                    "name": "_current",
+                    "type": "address"
+                }],
+                "name": "manualCheck",
+                "outputs": [{
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }],
+                "stateMutability": "pure",
+                "type": "function",
+                "constant": true
+            }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "_current",
+                    "type": "address"
+                }, {
+                    "internalType": "string",
+                    "name": "_companyName",
+                    "type": "string"
+                }],
+                "name": "autoCheck",
+                "outputs": [{
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }],
+                "stateMutability": "view",
+                "type": "function",
+                "constant": true
+            }
+        ];
         async function loadWeb3() {
             if (window.ethereum) {
                 window.web3 = new Web3(window.ethereum);
@@ -163,13 +168,13 @@
         async function digitalDuplicateManual() {
             load();
             const account = await getCurrentAccount();
-            var ddaddress = '0xcE10c20d5954f4071AE3855502bcdbA97743eB3F';
+
             var ddcontract = await new web3.eth.Contract(abi, ddaddress);
             var _originalAddress = document.getElementById("_originalAddress").value;
             var _currentAddress = document.getElementById("_currentAddress").value;
             var result = await ddcontract.methods.manualCheck(_originalAddress, _currentAddress).send({
                 from: account
-            }, function(err, res) {
+            }, function (err, res) {
                 if (err) {
                     console.log(err);
                 } else if (res) {
@@ -184,13 +189,12 @@
         async function digitalDuplicateAuto() {
             load();
             const account = await getCurrentAccount();
-            var ddaddress = '0xcE10c20d5954f4071AE3855502bcdbA97743eB3F';
             var ddcontract = await new web3.eth.Contract(abi, ddaddress);
             var _currentAddressAuto = document.getElementById("_currentAddressAuto").value;
             var _currCompanyName = document.getElementById("_currCompanyName").value;
             var result = await ddcontract.methods.autoCheck(_currentAddressAuto, _currCompanyName).send({
                 from: account
-            }, function(err, res) {
+            }, function (err, res) {
                 if (err) {
                     console.log(err);
                 } else if (res) {
@@ -206,13 +210,13 @@
         async function addCompanyAddress() {
             load();
             const account = await getCurrentAccount();
-            var ddaddress = '0xcE10c20d5954f4071AE3855502bcdbA97743eB3F';
+
             var ddcontract = await new web3.eth.Contract(abi, ddaddress);
             var _newCompAddress = document.getElementById("_newCompAddress").value;
             var _newcompanyName = document.getElementById("_newcompanyName").value;
             var result = await ddcontract.methods.addCompanyAddress(_newCompAddress, _newcompanyName).send({
                 from: account
-            }, function(err, res) {
+            }, function (err, res) {
                 if (err) {
                     console.log(err);
                 } else if (res) {
@@ -226,13 +230,13 @@
         async function addVerifiedUser() {
             load();
             const account = await getCurrentAccount();
-            var ddaddress = '0xcE10c20d5954f4071AE3855502bcdbA97743eB3F';
+
             var ddcontract = await new web3.eth.Contract(abi, ddaddress);
             var _newVerifiedUser = document.getElementById("_newVerifiedUser").value;
             // var _newcompanyName = document.getElementById("_newcompanyName").value;
             var result = await ddcontract.methods.addVerifiedUser(_newVerifiedUser).send({
                 from: account
-            }, function(err, res) {
+            }, function (err, res) {
                 if (err) {
                     console.log(err);
                 } else if (res) {

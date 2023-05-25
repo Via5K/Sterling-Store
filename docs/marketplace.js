@@ -1771,11 +1771,10 @@ async function getCurrentAccount() {
 async function availableToBuy() {
     load();
     const account = await getCurrentAccount();
-
     var nftcontract = await new web3.eth.Contract(abi, nftaddress)
     var result = await nftcontract.methods.availableToBuy().call({
         from: account
-    }, function(err, res) {
+    }, function (err, res) {
         if (err) {
             console.log(err);
         } else if (res) {
@@ -1787,14 +1786,12 @@ async function availableToBuy() {
 async function viewnfts() {
     load();
     const account = await getCurrentAccount();
-
-
     var nftcontract = await new web3.eth.Contract(abi, nftaddress)
-        // var tokenId = document.getElementById("_tokenId").value;
+    // var tokenId = document.getElementById("_tokenId").value;
 
     var result = await nftcontract.methods.viewMyNFTS(account).call({
         from: account
-    }, function(err, res) {
+    }, function (err, res) {
         if (err) {
             console.log(err);
         } else {
@@ -1807,12 +1804,11 @@ async function viewnfts() {
 async function buyNFT() {
     load();
     const account = await getCurrentAccount();
-
     var nftcontract = await new web3.eth.Contract(abi, nftaddress)
     var tokenId = document.getElementById("_tokenId").value;
     var result = await nftcontract.methods.buyNFT(tokenId).send({
         from: account
-    }, function(err, res) {
+    }, function (err, res) {
         if (err) {
             console.log(err);
         } else if (res) {
@@ -1825,12 +1821,11 @@ async function buyNFT() {
 async function sellNFT() {
     load();
     const account = await getCurrentAccount();
-
     var nftcontract = await new web3.eth.Contract(abi, nftaddress)
     var tokenId = document.getElementById("__tokenId").value;
     var result = await nftcontract.methods.addForSell(tokenId).send({
         from: account
-    }, function(err, res) {
+    }, function (err, res) {
         if (err) {
             console.log(err);
         } else if (res) {
@@ -1847,7 +1842,7 @@ async function removeFromSellNFT() {
     var tokenId = document.getElementById("___tokenId").value;
     var result = await nftcontract.methods.removeFromSell(tokenId).send({
         from: account
-    }, function(err, res) {
+    }, function (err, res) {
         if (err) {
             console.log(err);
         } else if (res) {
@@ -1862,7 +1857,7 @@ async function reIssuePreLaunchNFT() {
     var nftcontract = await new web3.eth.Contract(abi, nftaddress)
     var result = await nftcontract.methods.reIssueNFTForPreLaunch(account).send({
         from: account
-    }, function(err, res) {
+    }, function (err, res) {
         if (err) {
             console.log(err);
         } else if (res) {

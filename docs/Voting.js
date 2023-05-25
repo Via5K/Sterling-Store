@@ -1,188 +1,180 @@
+var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
+
+
 var abi = [{
-        "inputs": [{
-            "internalType": "contract NFT",
-            "name": "_nft",
+    "inputs": [{
+        "internalType": "contract NFT",
+        "name": "_nft",
+        "type": "address"
+    }],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+}, {
+    "inputs": [{
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+    }],
+    "name": "votingRecord",
+    "outputs": [{
+            "internalType": "string",
+            "name": "votingName",
+            "type": "string"
+        },
+        {
+            "internalType": "bool",
+            "name": "votingStarted",
+            "type": "bool"
+        },
+        {
+            "internalType": "bool",
+            "name": "resultDeclared",
+            "type": "bool"
+        },
+        {
+            "internalType": "address",
+            "name": "owner",
             "type": "address"
-        }],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-    },
-    {
-        "inputs": [{
+        }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+}, {
+    "inputs": [{
+        "internalType": "uint256",
+        "name": "_index",
+        "type": "uint256"
+    }],
+    "name": "findActiveVotingsId",
+    "outputs": [{
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+    }],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+}, {
+    "inputs": [],
+    "name": "activeVotingLength",
+    "outputs": [{
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+    }],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+}, {
+    "inputs": [{
+        "internalType": "string",
+        "name": "_tokenId",
+        "type": "string"
+    }],
+    "name": "getVotingName",
+    "outputs": [{
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+    }],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+}, {
+    "inputs": [{
+            "internalType": "string",
+            "name": "_id",
+            "type": "string"
+        },
+        {
+            "internalType": "string",
+            "name": "_votingName",
+            "type": "string"
+        }
+    ],
+    "name": "createNewVoting",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}, {
+    "inputs": [{
+            "internalType": "string",
+            "name": "_id",
+            "type": "string"
+        },
+        {
+            "internalType": "string",
+            "name": "_contestant",
+            "type": "string"
+        }
+    ],
+    "name": "addChoices",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}, {
+    "inputs": [{
+        "internalType": "string",
+        "name": "_id",
+        "type": "string"
+    }],
+    "name": "viewChoices",
+    "outputs": [{
+        "internalType": "string[]",
+        "name": "",
+        "type": "string[]"
+    }],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+}, {
+    "inputs": [{
+            "internalType": "string",
+            "name": "_id",
+            "type": "string"
+        },
+        {
+            "internalType": "string",
+            "name": "_votedFor",
+            "type": "string"
+        }
+    ],
+    "name": "newVote",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}, {
+    "inputs": [{
+        "internalType": "string",
+        "name": "_id",
+        "type": "string"
+    }],
+    "name": "startVoting",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}, {
+    "inputs": [{
+        "internalType": "string",
+        "name": "_id",
+        "type": "string"
+    }],
+    "name": "checkResult",
+    "outputs": [{
             "internalType": "string",
             "name": "",
             "type": "string"
-        }],
-        "name": "votingRecord",
-        "outputs": [{
-                "internalType": "string",
-                "name": "votingName",
-                "type": "string"
-            },
-            {
-                "internalType": "bool",
-                "name": "votingStarted",
-                "type": "bool"
-            },
-            {
-                "internalType": "bool",
-                "name": "resultDeclared",
-                "type": "bool"
-            },
-            {
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function",
-        "constant": true
-    },
-    {
-        "inputs": [{
+        },
+        {
             "internalType": "uint256",
-            "name": "_index",
-            "type": "uint256"
-        }],
-        "name": "findActiveVotingsId",
-        "outputs": [{
-            "internalType": "string",
-            "name": "",
-            "type": "string"
-        }],
-        "stateMutability": "view",
-        "type": "function",
-        "constant": true
-    },
-    {
-        "inputs": [],
-        "name": "activeVotingLength",
-        "outputs": [{
-            "internalType": "uint256",
             "name": "",
             "type": "uint256"
-        }],
-        "stateMutability": "view",
-        "type": "function",
-        "constant": true
-    },
-    {
-        "inputs": [{
-            "internalType": "string",
-            "name": "_tokenId",
-            "type": "string"
-        }],
-        "name": "getVotingName",
-        "outputs": [{
-            "internalType": "string",
-            "name": "",
-            "type": "string"
-        }],
-        "stateMutability": "view",
-        "type": "function",
-        "constant": true
-    },
-    {
-        "inputs": [{
-                "internalType": "string",
-                "name": "_id",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_votingName",
-                "type": "string"
-            }
-        ],
-        "name": "createNewVoting",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-                "internalType": "string",
-                "name": "_id",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_contestant",
-                "type": "string"
-            }
-        ],
-        "name": "addChoices",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "string",
-            "name": "_id",
-            "type": "string"
-        }],
-        "name": "viewChoices",
-        "outputs": [{
-            "internalType": "string[]",
-            "name": "",
-            "type": "string[]"
-        }],
-        "stateMutability": "view",
-        "type": "function",
-        "constant": true
-    },
-    {
-        "inputs": [{
-                "internalType": "string",
-                "name": "_id",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_votedFor",
-                "type": "string"
-            }
-        ],
-        "name": "newVote",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "string",
-            "name": "_id",
-            "type": "string"
-        }],
-        "name": "startVoting",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "string",
-            "name": "_id",
-            "type": "string"
-        }],
-        "name": "checkResult",
-        "outputs": [{
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    }
-]
+        }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}]
 async function loadWeb3() {
     if (window.ethereum) {
         window.web3 = new Web3(window.ethereum);
@@ -203,11 +195,9 @@ async function getCurrentAccount() {
 async function checkResult() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
+
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var _id = document.getElementById('_checkResultId').value;
-
-
     var result = await votingContract.methods.checkResult(_id).call({
         from: account
     }, function (err, result) {
@@ -226,7 +216,6 @@ async function checkResult() {
 async function newVote() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var _id = document.getElementById('_newVoteId').value;
     var _votedFor = document.getElementById('_votedFor').value;
@@ -250,7 +239,7 @@ async function newVote() {
 async function startVoting() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
+
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var _id = document.getElementById('_startVotingId').value;
 
@@ -271,7 +260,7 @@ async function startVoting() {
 async function viewChoices() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
+
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var _id = document.getElementById('_viewChoiceId').value;
 
@@ -298,7 +287,7 @@ async function viewChoices() {
 async function addChoices() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
+
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var _id = document.getElementById('_id').value;
     var _contestant = document.getElementById('_contestant').value;
@@ -331,7 +320,7 @@ function _UqUrl() {
 async function createNewVoting() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
+
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var _id = _UqUrl();
     var _votingName = document.getElementById('_votingName').value;
@@ -354,7 +343,7 @@ async function createNewVoting() {
 async function getVotingName() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
+
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var _tokenId = document.getElementById('_tokenId').value;
     var result = await votingContract.methods.getVotingName(_tokenId).call({
@@ -376,7 +365,7 @@ async function getVotingName() {
 async function findActiveVotingsId() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
+
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var _index = document.getElementById('_index').value;
     //once redeployed, make sure to change the method name here too... rename it as. findActiveVotingsId
@@ -397,7 +386,7 @@ async function findActiveVotingsId() {
 async function activeVotingLength() {
     load();
     const account = await getCurrentAccount();
-    var votingAddress = '0x06cAe43E2666269501dC4BEbFcfFd48f17498095';
+
     var votingContract = await new web3.eth.Contract(abi, votingAddress)
     var result = await votingContract.methods.activeVotingLength().call({
         from: account

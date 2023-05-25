@@ -15,7 +15,9 @@
     </form>
     <button onclick="refurb()">CHECK</button>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.0/web3.min.js" integrity="sha512-RGPKVfQewHGfk9yaB7ThGPKAQU+civS5awsfStLg22jrWbqgDkNzPtIwNFpFApr3ccjB730SRxi+KnDjhIuTpw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.0/web3.min.js"
+        integrity="sha512-RGPKVfQewHGfk9yaB7ThGPKAQU+civS5awsfStLg22jrWbqgDkNzPtIwNFpFApr3ccjB730SRxi+KnDjhIuTpw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
     </script>
     <script>
         var refurbAddress = '0x860Bf5B34c2b87C992dC24ABb22242F0AD48b52F';
@@ -1536,7 +1538,7 @@
             var tokenId = document.getElementById("_tokenId").value;
             var result = await refurbContract.methods.checkRefurbishedItem(tokenId).send({
                 from: account
-            }, function(err, res) {
+            }, function (err, res) {
                 if (err) {
                     console.log("Error");
                     console.log(err);

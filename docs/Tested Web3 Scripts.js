@@ -1,3 +1,4 @@
+var callerAddress = '0xa08727770Cee812248b2C21ba40ADCF2FC09C7ce';
 var nftaddress = '0xEECAde99CeF4a95594F0E3b3b42bBbce8d1E495C';
 var abi = [{
     "inputs": [],
@@ -1681,7 +1682,66 @@ var abi = [{
     "stateMutability": "nonpayable",
     "type": "function"
 }]
-
+var abiCaller = [{
+    "inputs": [{
+        "internalType": "contract NFT",
+        "name": "_nft",
+        "type": "address"
+    }],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+}, {
+    "inputs": [{
+            "internalType": "uint256",
+            "name": "_cost",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_pid",
+            "type": "uint256"
+        },
+        {
+            "internalType": "string",
+            "name": "_UqURL",
+            "type": "string"
+        },
+        {
+            "internalType": "string",
+            "name": "_name",
+            "type": "string"
+        },
+        {
+            "internalType": "string",
+            "name": "_description",
+            "type": "string"
+        },
+        {
+            "internalType": "string",
+            "name": "_url",
+            "type": "string"
+        },
+        {
+            "internalType": "string",
+            "name": "_trxnHash",
+            "type": "string"
+        },
+        {
+            "internalType": "address",
+            "name": "_seller",
+            "type": "address"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_validTill",
+            "type": "uint256"
+        }
+    ],
+    "name": "createNFT",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}]
 async function owner() {
     load();
     const account = await getCurrentAccount();
@@ -1762,9 +1822,9 @@ async function viewProp2() {
 async function createNFT() {
     load();
     const account = await getCurrentAccount();
-    var callerAddress = '0xAF1e8d728390eA94ef700D9172FEeEFC34495DD4';
 
-    var callerContract = await new web3.eth.Contract(abi, callerAddress)
+
+    var callerContract = await new web3.eth.Contract(abiCaller, callerAddress)
 
     var cost = document.getElementById("_cost").value;
     var pid = document.getElementById("_pid").value;
