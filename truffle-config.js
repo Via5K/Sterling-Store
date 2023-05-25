@@ -57,12 +57,26 @@ module.exports = {
             networkCheckTimeout: 10000,
             timeoutBlocks: 2000,
             skipDryRun: true,
-            provider: function() {
-                return new HDWalletProvider(MNEMONIC, API_URL)
+            provider: function () {
+                return new HDWalletProvider(MNEMONIC, "wss://eth-goerli.g.alchemy.com/v2/W_u6rcnUBcgmcOkupij9s7ACJLT0_PQB")
             },
             network_id: 5,
+            // maxSockets: Infinity
             // gas: 60000000 //GAS FEE
             // gas: 4000000 //4M is the max
+        },
+        sepolia: {
+            networkCheckTimeout: 10000,
+            timeoutBlocks: 2000,
+            skipDryRun: true,
+            provider: function () {
+                return new HDWalletProvider(MNEMONIC, API_URL)
+            },
+            network_id: 11155111,
+            // maxSockets: Infinity
+            // gas: 60000000 //GAS FEE
+            // gas: 4000000 //4M is the max
+
         }
 
         // Another network with more advanced options...

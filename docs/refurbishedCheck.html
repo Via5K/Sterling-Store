@@ -18,23 +18,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.0/web3.min.js" integrity="sha512-RGPKVfQewHGfk9yaB7ThGPKAQU+civS5awsfStLg22jrWbqgDkNzPtIwNFpFApr3ccjB730SRxi+KnDjhIuTpw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     </script>
     <script>
-        async function loadWeb3() {
-            if (window.ethereum) {
-                window.web3 = new Web3(window.ethereum);
-                window.ethereum.enable();
-            }
-        }
-        async function load() {
-            await loadWeb3();
-        }
-        async function getCurrentAccount() {
-            const accounts = await window.web3.eth.getAccounts();
-            return accounts[0];
-        }
-        async function refurb() {
-            load();
-            const account = await getCurrentAccount();
-            var abi = [{
+        var refurbAddress = '0x860Bf5B34c2b87C992dC24ABb22242F0AD48b52F';
+        var abi = [{
                 "anonymous": false,
                 "inputs": [{
                     "indexed": true,
@@ -534,6 +519,16 @@
                 "stateMutability": "nonpayable",
                 "type": "function"
             }, {
+                "inputs": [{
+                    "internalType": "uint256",
+                    "name": "_tokenId",
+                    "type": "uint256"
+                }],
+                "name": "addForSell",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
                 "inputs": [],
                 "name": "addNewBoughtOn",
                 "outputs": [],
@@ -614,6 +609,62 @@
                 "stateMutability": "nonpayable",
                 "type": "function"
             }, {
+                "inputs": [],
+                "name": "availableToBuy",
+                "outputs": [{
+                    "components": [{
+                        "internalType": "bool",
+                        "name": "minted",
+                        "type": "bool"
+                    }, {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    }, {
+                        "internalType": "string",
+                        "name": "description",
+                        "type": "string"
+                    }, {
+                        "internalType": "string",
+                        "name": "url",
+                        "type": "string"
+                    }, {
+                        "internalType": "string",
+                        "name": "trxnHash",
+                        "type": "string"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "nftType",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "boughtOn",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "address",
+                        "name": "seller",
+                        "type": "address"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "ExpireOn",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "bool",
+                        "name": "expireable",
+                        "type": "bool"
+                    }],
+                    "internalType": "struct NFT.nftProp[]",
+                    "name": "",
+                    "type": "tuple[]"
+                }, {
+                    "internalType": "uint256[]",
+                    "name": "",
+                    "type": "uint256[]"
+                }],
+                "stateMutability": "view",
+                "type": "function",
+                "constant": true
+            }, {
                 "inputs": [{
                     "internalType": "address",
                     "name": "owner",
@@ -642,6 +693,24 @@
             }, {
                 "inputs": [{
                     "internalType": "uint256",
+                    "name": "_tokenId",
+                    "type": "uint256"
+                }, {
+                    "internalType": "address",
+                    "name": "_off",
+                    "type": "address"
+                }],
+                "name": "burnMyToken",
+                "outputs": [{
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "uint256",
                     "name": "tokenId",
                     "type": "uint256"
                 }, {
@@ -657,6 +726,31 @@
                 "outputs": [],
                 "stateMutability": "nonpayable",
                 "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "uint256",
+                    "name": "_tokenId",
+                    "type": "uint256"
+                }],
+                "name": "buyNFT",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "_user",
+                    "type": "address"
+                }],
+                "name": "getAllOwnerOwnedIds",
+                "outputs": [{
+                    "internalType": "uint256[]",
+                    "name": "",
+                    "type": "uint256[]"
+                }],
+                "stateMutability": "view",
+                "type": "function",
+                "constant": true
             }, {
                 "inputs": [{
                     "internalType": "address",
@@ -683,6 +777,21 @@
                     "internalType": "address",
                     "name": "",
                     "type": "address"
+                }],
+                "stateMutability": "view",
+                "type": "function",
+                "constant": true
+            }, {
+                "inputs": [{
+                    "internalType": "uint256",
+                    "name": "_tokenId",
+                    "type": "uint256"
+                }],
+                "name": "getNFTtype",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
                 }],
                 "stateMutability": "view",
                 "type": "function",
@@ -769,6 +878,21 @@
                 "stateMutability": "nonpayable",
                 "type": "function"
             }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "_off",
+                    "type": "address"
+                }],
+                "name": "myTotalNFTCount",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "stateMutability": "view",
+                "type": "function",
+                "constant": true
+            }, {
                 "inputs": [],
                 "name": "name",
                 "outputs": [{
@@ -834,6 +958,16 @@
             }, {
                 "inputs": [{
                     "internalType": "address",
+                    "name": "_off",
+                    "type": "address"
+                }],
+                "name": "reIssueNFTForPreLaunch",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "address",
                     "name": "_of",
                     "type": "address"
                 }, {
@@ -842,6 +976,16 @@
                     "type": "string"
                 }],
                 "name": "removeAllExpiredNFT",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "uint256",
+                    "name": "_tokenId",
+                    "type": "uint256"
+                }],
+                "name": "removeFromSell",
                 "outputs": [],
                 "stateMutability": "nonpayable",
                 "type": "function"
@@ -985,6 +1129,193 @@
                 "type": "function"
             }, {
                 "inputs": [{
+                    "internalType": "address",
+                    "name": "_off",
+                    "type": "address"
+                }, {
+                    "internalType": "uint256[]",
+                    "name": "allOwnedTokens",
+                    "type": "uint256[]"
+                }],
+                "name": "userPersonalNFTinfo",
+                "outputs": [{
+                    "components": [{
+                        "internalType": "bool",
+                        "name": "minted",
+                        "type": "bool"
+                    }, {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    }, {
+                        "internalType": "string",
+                        "name": "description",
+                        "type": "string"
+                    }, {
+                        "internalType": "string",
+                        "name": "url",
+                        "type": "string"
+                    }, {
+                        "internalType": "string",
+                        "name": "trxnHash",
+                        "type": "string"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "nftType",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "boughtOn",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "address",
+                        "name": "seller",
+                        "type": "address"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "ExpireOn",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "bool",
+                        "name": "expireable",
+                        "type": "bool"
+                    }],
+                    "internalType": "struct NFT.nftProp[]",
+                    "name": "",
+                    "type": "tuple[]"
+                }],
+                "stateMutability": "view",
+                "type": "function",
+                "constant": true
+            }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "_user",
+                    "type": "address"
+                }, {
+                    "internalType": "uint256[]",
+                    "name": "allOwnedTokens",
+                    "type": "uint256[]"
+                }],
+                "name": "userStakedNFTinfo",
+                "outputs": [{
+                    "components": [{
+                        "internalType": "uint256",
+                        "name": "_stakedOn",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "_stakedTill",
+                        "type": "uint256"
+                    }],
+                    "internalType": "struct NFT.stakeProp[]",
+                    "name": "",
+                    "type": "tuple[]"
+                }],
+                "stateMutability": "view",
+                "type": "function",
+                "constant": true
+            }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "_off",
+                    "type": "address"
+                }],
+                "name": "viewAllTokens",
+                "outputs": [{
+                    "internalType": "uint256[]",
+                    "name": "",
+                    "type": "uint256[]"
+                }],
+                "stateMutability": "view",
+                "type": "function",
+                "constant": true
+            }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "_off",
+                    "type": "address"
+                }],
+                "name": "viewMyNFTS",
+                "outputs": [{
+                    "internalType": "uint256[]",
+                    "name": "",
+                    "type": "uint256[]"
+                }],
+                "stateMutability": "view",
+                "type": "function",
+                "constant": true
+            }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "_user",
+                    "type": "address"
+                }],
+                "name": "viewMyStakedNFTs",
+                "outputs": [{
+                    "components": [{
+                        "internalType": "bool",
+                        "name": "minted",
+                        "type": "bool"
+                    }, {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    }, {
+                        "internalType": "string",
+                        "name": "description",
+                        "type": "string"
+                    }, {
+                        "internalType": "string",
+                        "name": "url",
+                        "type": "string"
+                    }, {
+                        "internalType": "string",
+                        "name": "trxnHash",
+                        "type": "string"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "nftType",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "boughtOn",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "address",
+                        "name": "seller",
+                        "type": "address"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "ExpireOn",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "bool",
+                        "name": "expireable",
+                        "type": "bool"
+                    }],
+                    "internalType": "struct NFT.nftProp[]",
+                    "name": "",
+                    "type": "tuple[]"
+                }, {
+                    "components": [{
+                        "internalType": "uint256",
+                        "name": "_stakedOn",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "_stakedTill",
+                        "type": "uint256"
+                    }],
+                    "internalType": "struct NFT.stakeProp[]",
+                    "name": "",
+                    "type": "tuple[]"
+                }],
+                "stateMutability": "view",
+                "type": "function",
+                "constant": true
+            }, {
+                "inputs": [{
                     "internalType": "uint256",
                     "name": "_tokenId",
                     "type": "uint256"
@@ -1043,6 +1374,131 @@
                 "constant": true
             }, {
                 "inputs": [{
+                    "internalType": "address",
+                    "name": "_off",
+                    "type": "address"
+                }],
+                "name": "viewPersonalNFT",
+                "outputs": [{
+                    "components": [{
+                        "internalType": "bool",
+                        "name": "minted",
+                        "type": "bool"
+                    }, {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    }, {
+                        "internalType": "string",
+                        "name": "description",
+                        "type": "string"
+                    }, {
+                        "internalType": "string",
+                        "name": "url",
+                        "type": "string"
+                    }, {
+                        "internalType": "string",
+                        "name": "trxnHash",
+                        "type": "string"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "nftType",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "boughtOn",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "address",
+                        "name": "seller",
+                        "type": "address"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "ExpireOn",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "bool",
+                        "name": "expireable",
+                        "type": "bool"
+                    }],
+                    "internalType": "struct NFT.nftProp[]",
+                    "name": "",
+                    "type": "tuple[]"
+                }],
+                "stateMutability": "view",
+                "type": "function",
+                "constant": true
+            }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "_user",
+                    "type": "address"
+                }],
+                "name": "viewUserStakedNFT",
+                "outputs": [{
+                    "components": [{
+                        "internalType": "bool",
+                        "name": "minted",
+                        "type": "bool"
+                    }, {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    }, {
+                        "internalType": "string",
+                        "name": "description",
+                        "type": "string"
+                    }, {
+                        "internalType": "string",
+                        "name": "url",
+                        "type": "string"
+                    }, {
+                        "internalType": "string",
+                        "name": "trxnHash",
+                        "type": "string"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "nftType",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "boughtOn",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "address",
+                        "name": "seller",
+                        "type": "address"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "ExpireOn",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "bool",
+                        "name": "expireable",
+                        "type": "bool"
+                    }],
+                    "internalType": "struct NFT.nftProp[]",
+                    "name": "",
+                    "type": "tuple[]"
+                }, {
+                    "components": [{
+                        "internalType": "uint256",
+                        "name": "_stakedOn",
+                        "type": "uint256"
+                    }, {
+                        "internalType": "uint256",
+                        "name": "_stakedTill",
+                        "type": "uint256"
+                    }],
+                    "internalType": "struct NFT.stakeProp[]",
+                    "name": "",
+                    "type": "tuple[]"
+                }],
+                "stateMutability": "view",
+                "type": "function",
+                "constant": true
+            }, {
+                "inputs": [{
                     "internalType": "uint256",
                     "name": "tokenId",
                     "type": "uint256"
@@ -1056,22 +1512,38 @@
                 "stateMutability": "view",
                 "type": "function",
                 "constant": true
-            }];
-            var refurbAddress = '0x3513a59A7D5F90295674D8bDba9e6819FD0Ec6a5';
+            }
+
+
+        ];
+        async function loadWeb3() {
+            if (window.ethereum) {
+                window.web3 = new Web3(window.ethereum);
+                window.ethereum.enable();
+            }
+        }
+        async function load() {
+            await loadWeb3();
+        }
+        async function getCurrentAccount() {
+            const accounts = await window.web3.eth.getAccounts();
+            return accounts[0];
+        }
+        async function refurb() {
+            load();
+            const account = await getCurrentAccount();
             var refurbContract = await new web3.eth.Contract(abi, refurbAddress)
             var tokenId = document.getElementById("_tokenId").value;
             var result = await refurbContract.methods.checkRefurbishedItem(tokenId).send({
                 from: account
-            }, function(err, result) {
+            }, function(err, res) {
                 if (err) {
                     console.log("Error");
                     console.log(err);
-                }
-                if (result) {
-                    if (result == true)
-                        document.getElementById("welcome").innerText = "Yes, the Item is Refurbished";
-                    else document.getElementById("welcome").innerText = "No, the Item is not Refurbished";
-                }
+                } else if (res == false) {
+                    document.getElementById("welcome").innerText = "No, the Item is not Refurbished";
+                } else document.getElementById("welcome").innerText = "Yes, the Item is Refurbished";
+
             });
         }
     </script>

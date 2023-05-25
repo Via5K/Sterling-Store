@@ -8,7 +8,9 @@
     <title>marketplace</title>
 </head>
 
+
 <!-- 
+
 
     Process to be follwoed
     first we will list all the NFTS that are available to buy. from this method: (availableToBuy)
@@ -25,6 +27,13 @@
     Will not be done by user.
     -->
 
+
+
+    <!-- Special Utility function that reissues the token. Such that a special NFT is minted for prelaunched NFT after Expiration Time-->
+    <h1 id="reIssuePreLaunch">ReIssue Pre Launch NFT</h1>
+    <button onclick="reIssuePreLaunchNFT()">Re-Issue NFT</button>
+
+
     <!-- returns array list of all the avail. tokens -->
     <h1 id="listAll">List all avail. NFT</h1>
     <button onclick="availableToBuy()">availableToBuy NFT</button>
@@ -32,35 +41,31 @@
 
 
     <!-- while showing we show the nft token no. also.... -->
-    <h1 id="viewNFTS">view my nfts</h1>
-    <button onclick="viewnfts()">view</button>
+    <h1 id="viewNFTS">View My Nfts [Token Ids Only]</h1>
+    <button onclick="viewnfts()">View</button>
 
-    <h1 id="buy_NFT">Buy NFT</h1>
+    <h1 id="buy_NFT">Buy a NFT</h1>
     <form action="">
         <input type="text" placeholder="_tokenId" id="_tokenId" name="_tokenId"> <br>
     </form>
     <button onclick="buyNFT()">Buy NFT</button>
 
-    <h1 id="sell_NFT">Sell NFT</h1>
+    <h1 id="sell_NFT">Sell My NFT</h1>
     <form action="">
         <input type="text" placeholder="_tokenId" id="__tokenId" name="_tokenId"> <br>
     </form>
     <button onclick="sellNFT()">Sell NFT</button>
 
-    <h1 id="removeFromSellNFT">removeFromSellNFT NFT</h1>
+    <h1 id="sell_NFT">Remove NFT From Sell</h1>
     <form action="">
         <input type="text" placeholder="_tokenId" id="___tokenId" name="_tokenId"> <br>
     </form>
-    <button onclick="removeFromSellNFT()">Remove From Sell NFT</button>
+    <button onclick="removeFromSellNFT()">Remove NFT</button>
 
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.0/web3.min.js"
-        integrity="sha512-RGPKVfQewHGfk9yaB7ThGPKAQU+civS5awsfStLg22jrWbqgDkNzPtIwNFpFApr3ccjB730SRxi+KnDjhIuTpw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.0/web3.min.js" integrity="sha512-RGPKVfQewHGfk9yaB7ThGPKAQU+civS5awsfStLg22jrWbqgDkNzPtIwNFpFApr3ccjB730SRxi+KnDjhIuTpw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="./marketplace.js"></script>
-    \
+
 </body>
 
 </html>

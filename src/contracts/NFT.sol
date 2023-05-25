@@ -887,10 +887,16 @@ contract NFT is ERC721 {
             forSellArray[counter] = forSellArray[forSellArray.length - 1];
             forSellArray.pop();
         }
+<<<<<<< HEAD
         //otherwise just remove the item.
         else {
             forSellArray.pop();
         }
+=======
+        //  else {
+        //     forSellArray.pop();
+        // }
+>>>>>>> dev
     }
 
     /****
@@ -959,6 +965,7 @@ contract NFT is ERC721 {
             forSellArray[counter] = forSellArray[forSellArray.length - 1];
             forSellArray.pop();
         }
+        _transfer(tempUser, msg.sender, _tokenId);
     }
 
     /****
