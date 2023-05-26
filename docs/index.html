@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>marketplace</title>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 </head>
 
 
@@ -24,11 +25,13 @@
 <body>
     <div>
 
-        <a href="./digitalDuplicateCheck.html">Digital Duplicate</a> <br>
-        <a href="./Caller.html">Caller</a> <br>
-        <a href="./refurbishedCheck.html">Refurb Check</a> <br>
-        <a href="./Voting.html">Voting</a>
-        <a href="marketplace.html">Marketplace</a>
+        <a href="./digitalDuplicateCheck.html" class="text-blue-500 hover:text-blue-600  hover:font-semibold">Digital
+            Duplicate</a> <br>
+        <a href="./Caller.html" class="text-blue-500 hover:text-blue-600  hover:font-semibold">Caller</a> <br>
+        <a href="./refurbishedCheck.html" class="text-blue-500 hover:text-blue-600  hover:font-semibold">Refurb
+            Check</a> <br>
+        <a href="./Voting.html" class="text-blue-500 hover:text-blue-600  hover:font-semibold">Voting</a> <br>
+        <a href="marketplace.html" class="text-blue-500 hover:text-blue-600  hover:font-semibold">Marketplace</a>
     </div>
     <!-- Click on the listed item and click on buy.
     then, from that NFT information thaat we have, send that token ID now to blockchain. This will be happening in background.
@@ -38,8 +41,8 @@
 
 
     <!-- Special Utility function that reissues the token. Such that a special NFT is minted for prelaunched NFT after Expiration Time-->
-    <h1 id="reIssuePreLaunch">ReIssue Pre Launch NFT</h1>
-    <button onclick="reIssuePreLaunchNFT()">Re-Issue NFT</button>
+    <!-- <h1 id="reIssuePreLaunch">ReIssue Pre Launch NFT</h1>
+    <button onclick="reIssuePreLaunchNFT()">Re-Issue NFT</button> -->
 
 
     <!-- returns array list of all the avail. tokens -->
@@ -70,8 +73,9 @@
     </form>
     <button onclick="removeFromSellNFT()">Remove NFT</button>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.0/web3.min.js" integrity="sha512-RGPKVfQewHGfk9yaB7ThGPKAQU+civS5awsfStLg22jrWbqgDkNzPtIwNFpFApr3ccjB730SRxi+KnDjhIuTpw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.0/web3.min.js"
+        integrity="sha512-RGPKVfQewHGfk9yaB7ThGPKAQU+civS5awsfStLg22jrWbqgDkNzPtIwNFpFApr3ccjB730SRxi+KnDjhIuTpw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./marketplace.js"></script>
 
 </body>
