@@ -1,8 +1,8 @@
 # NFT In e-commerce [Strerling Store]
 
-This Repository is a part of NFT in E-Commerce, It includes the implementation of Blockchain section and test only as of now. Full Project with working demo can be viewed at [SterlingStore](https://sterlingStore.vercel.app).
+This Repository is a part of NFT in E-Commerce, It includes the implementation of Blockchain section and test only as of now. Full Project with working demo can be viewed at [SterlingStore](https://nftincommerce.vercel.app).
 
-## Deployment Information:
+## Deployment Information: [NOTE: This deployment is moved to Sepolia Network]
 
 Current Active Deployment is done on Goerli Network. 
 ![image](https://user-images.githubusercontent.com/72505269/191512347-b93f5879-7047-4f39-87f1-4fbc754b15c5.png)
@@ -69,3 +69,8 @@ Now, you can access the Patients contract with the 'n' only. So all the function
 
 Similarly, you can do it for other contracts, and call the functions with `instanceName.functionName('parameter')`
 
+
+## Fronetend
+
+This is the backend implementation for Sterling Store. Frontend Implementation can be viewed in [here](https://github.com/PrashantAmoli/NFTCommerce).
+Note that this is a POC for implementation of Ecommerce to blockchain with the help of NFTs.
